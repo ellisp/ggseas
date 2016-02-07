@@ -1,0 +1,10 @@
+Package: ggseas
+Title: Stats for Seasonal Adjustment on the Fly with ggplot2
+Version: 0.0.0.9000
+Authors: Peter Ellis, peter.ellis2013nz@gmail.com, author
+Description: ggplot2 stats for seasonal adjustment on the fly
+Depends:
+    R (>= 3.2.3), seasonal
+License: GPL-3
+LazyData: true
+RoxygenNote: 5.0.1
