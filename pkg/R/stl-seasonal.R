@@ -1,0 +1,60 @@
+StatSTL <- ggproto("StatSTL", Stat, 
+                      required_aes = c("x", "y"),
+                      
+                      compute_group = function(data, scales, frequency, s.window, ...) {
+                         y_ts <- ts(data$y, frequency = frequency)
+                         y_stl <- stl(y_ts, s.window = s.window)
+                         y_sa <- with(as.data.frame(y_stl$time.series), trend + remainder)
+                         result <- data.frame(x = data$x, y = as.numeric(y_sa))
+                         return(result)
+                      }
+)
+
+
+
+
+#' LOESS seasonal adjustment Stat
+#' 
+#' Conducts seasonal adjustment on the fly for ggplot2, from LOESS seasonal decomposition
+#' 
+#' @export
+#' @import ggplot2
+#' @param frequency The frequency for the time series
+#' @param s.window either the character string \code{"periodic"} or the span (in lags) of the 
+#' loess window for seasonal extraction, which should be odd and at least 7, according to
+#' Cleveland et al.  This has no default and must be chosen.
+#' @param ... other arguments for the geom
+#' @inheritParams ggplot2::stat_identity
+#' @family time series stats for ggplot2
+#' @examples
+#' ap_df <- data.frame(
+#'       x = as.numeric(time(AirPassengers)),
+#'       y = as.numeric(AirPassengers)
+#'    )
+#' 
+#' # periodic if fixed seasonality; doesn't work well:
+#' ggplot(ap_df, aes(x = x, y = y)) +
+#'    stat_stl(frequency = 12, s.window = "periodic")
+#' 
+#' # seasonality varies a bit over time, works better:
+#' ggplot(ap_df, aes(x = x, y = y)) +
+#'    stat_stl(frequency = 12, s.window = 7)
+#' 
+#' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+#' geom_point() +
+#'   facet_wrap(~sex) +
+#' stat_stl(frequency = 12, s.window = 7) +
+#'    ggtitle("Seasonally adjusted lung deaths")
+#'
+stat_stl <- function(mapping = NULL, data = NULL, geom = "line",
+                        position = "identity", show.legend = NA, 
+                        inherit.aes = TRUE, frequency, s.window, ...) {
+   ggplot2::layer(
+      stat = StatSTL, data = data, mapping = mapping, geom = geom, 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(frequency = frequency, s.window = s.window, 
+                    na.rm = FALSE, ...)
+      # note that this function is unforgiving of NAs.
+   )
+}
+

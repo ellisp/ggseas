@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-LICENCE
-.Rprofile
-fort.6
+^LICENCE$
+^.Rprofile$
+^fort.6$
+^EXAMPLES
