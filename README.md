@@ -11,7 +11,7 @@ Currently only available via this GitHub repository although I might tidy it up 
 
 
 ```r
-# devtools::install_github("ellisp/ggseas/pkg")
+devtools::install_github("ellisp/ggseas/pkg")
 ```
 
 
@@ -30,6 +30,7 @@ ap_df <- data.frame(
 
 # SEATS with defaults
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_seas(start = c(1949, 1), frequency = 12) +
    ggtitle("SEATS seasonal adjustment - international airline passengers") +
    ylab("International airline passengers per month")
@@ -40,6 +41,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ```r
 # X11 with no outlier treatment
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL)) +
    ggtitle("X11 seasonal adjustment - international airline passengers") +
    ylab("International airline passengers per month")
@@ -66,6 +68,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 ```r
 # periodic if fixed seasonality; doesn't work well:
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_stl(frequency = 12, s.window = "periodic")
 ```
 
@@ -74,6 +77,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ```r
 # seasonality varies a bit over time, works better:
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_stl(frequency = 12, s.window = 7)
 ```
 
@@ -84,6 +88,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ```r
 # default additive decomposition (doesn't work well in this case!):
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_decomp(frequency = 12)
 ```
 
@@ -92,6 +97,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ```r
 # multiplicative decomposition, more appropriate:
 ggplot(ap_df, aes(x = x, y = y)) +
+   geom_line(colour = "grey80") +
    stat_decomp(frequency = 12, type = "multiplicative")
 ```
 
