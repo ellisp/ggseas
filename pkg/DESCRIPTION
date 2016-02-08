@@ -1,6 +1,6 @@
 Package: ggseas
 Title: Stats for Seasonal Adjustment on the Fly with ggplot2
-Version: 0.0.0.9000
+Version: 0.0.2
 Author: Peter Ellis <peter.ellis2013nz@gmail.com>
 Maintainer: Peter Ellis <peter.ellis2013nz@gmail.com>
 Description: Provides ggplot2 stats that estimate seasonal adjusted series on the fly for time series.
