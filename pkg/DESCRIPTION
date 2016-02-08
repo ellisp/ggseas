@@ -5,7 +5,7 @@ Author: Peter Ellis <peter.ellis2013nz@gmail.com>
 Maintainer: Peter Ellis <peter.ellis2013nz@gmail.com>
 Description: Provides ggplot2 stats that estimate seasonal adjusted series on the fly for time series.
 Depends:
-    R (>= 3.2.3), seasonal, ggplot2 (>= 2.0.0)
+    R (>= 3.1.2), seasonal, ggplot2 (>= 2.0.0)
 License: GPL-3
 LazyData: true
 RoxygenNote: 5.0.1
