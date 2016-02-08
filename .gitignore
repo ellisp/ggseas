@@ -18,3 +18,9 @@ vignettes/*.pdf
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
 .Rproj.user
+
+# Files produced Roxygen
+man/*
+
+# Files produced by X13
+fort.6
