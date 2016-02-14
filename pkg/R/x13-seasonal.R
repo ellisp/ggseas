@@ -5,6 +5,7 @@ StatSeas <- ggproto("StatSeas", Stat,
                   required_aes = c("x", "y"),
                   
                   compute_group = function(data, scales, frequency, start, x13_params, ...) {
+                     data <- data[order(data$x), ]
                      y_ts <- ts(data$y, frequency = frequency, start = start)
                      y_sa <- seasonal::final(seasonal::seas(y_ts, list = x13_params))
                      result <- data.frame(x = data$x, y = as.numeric(y_sa))

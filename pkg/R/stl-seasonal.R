@@ -2,6 +2,7 @@ StatSTL <- ggproto("StatSTL", Stat,
                       required_aes = c("x", "y"),
                       
                       compute_group = function(data, scales, frequency, s.window, ...) {
+                         data <- data[order(data$x), ]
                          y_ts <- ts(data$y, frequency = frequency)
                          y_stl <- stl(y_ts, s.window = s.window)
                          y_sa <- with(as.data.frame(y_stl$time.series), trend + remainder)

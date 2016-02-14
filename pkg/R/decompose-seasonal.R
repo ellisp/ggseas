@@ -5,6 +5,7 @@ StatDecomp <- ggproto("StatDecomp", Stat,
                     required_aes = c("x", "y"),
                     
                     compute_group = function(data, scales, frequency, type, ...) {
+                       data <- data[order(data$x), ]
                        y_ts <- ts(data$y, frequency = frequency)
                        y_dc <- decompose(y_ts, type = type)
                        if(type == "additive"){

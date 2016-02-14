@@ -5,6 +5,10 @@ ap_df <- data.frame(
    y = as.numeric(AirPassengers)
 )
 
+
+
+
+
 ggplot(ap_df, aes(x = x, y = y)) +
    stat_seas(start = c(1949, 1), frequency = 12)
 
@@ -34,3 +38,18 @@ ggplot(ap_df, aes(x = x, y = y)) +
     facet_wrap(~sex) +
     stat_stl(frequency = 12, s.window = 7) +
     ggtitle("Seasonally adjusted lung deaths")
+  
+  
+  
+  #============ordering================
+  ldeaths_sorted <- ldeaths_df[order(ldeaths_df$deaths), ]
+  
+  ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
+       stat_decomp(frequency = 12)
+  
+  ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
+     stat_seas(frequency = 12, start = c(1949, 1))
+  
+  ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
+     stat_stl(frequency = 12, s.window = 7)
+  
