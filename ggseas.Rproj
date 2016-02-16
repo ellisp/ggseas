@@ -10,7 +10,7 @@ NumSpacesForTab: 3
 Encoding: UTF-8
 
 RnwWeave: knitr
-LaTeX: XeLaTeX
+LaTeX: pdfLaTeX
 
 BuildType: Package
 PackageUseDevtools: Yes
