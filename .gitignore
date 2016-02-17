@@ -25,3 +25,6 @@ man/*
 
 # Files produced by X13
 fort.6
+
+# test crap trying to get pdf to work
+examples/test.*
