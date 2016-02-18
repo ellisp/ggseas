@@ -6,9 +6,15 @@ Convenience functions that let you easily do seasonal adjustment on the fly with
 Depends on the [`seasonal` package](https://cran.r-project.org/web/packages/seasonal/index.html) to give you access to X13-SEATS-ARIMA.
 
 ## Installation
-Currently only available via this GitHub repository although I might tidy it up for CRAN.  Install the usual way:
+Install the stable version the usual way from CRAN:
 
 
+```r
+install.packages("ggseas")
+```
+
+
+or the latest version (bugs and all) from GitHub:
 
 ```r
 devtools::install_github("ellisp/ggseas/pkg")
@@ -22,6 +28,17 @@ So far there are three types of seasonal adjustment possible
 
 ```r
 library(ggseas)
+```
+
+```
+## Loading required package: seasonal
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```r
 # make demo data
 ap_df <- data.frame(
    x = as.numeric(time(AirPassengers)),
@@ -36,7 +53,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
    ylab("International airline passengers per month")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
 ```r
 # X11 with no outlier treatment
@@ -47,7 +64,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
    ylab("International airline passengers per month")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-2.png)
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-2.png)
 
 ```r
 ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
@@ -61,7 +78,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
    theme(legend.position = "none")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-3.png)
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-3.png)
 
 ### STL (LOESS-based decomposition)
 
@@ -72,7 +89,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
    stat_stl(frequency = 12, s.window = "periodic")
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 ```r
 # seasonality varies a bit over time, works better:
@@ -81,7 +98,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
    stat_stl(frequency = 12, s.window = 7)
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-2.png)
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-2.png)
 
 ### Classical decomposition
 
@@ -92,7 +109,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
    stat_decomp(frequency = 12)
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 ```r
 # multiplicative decomposition, more appropriate:
@@ -101,4 +118,4 @@ ggplot(ap_df, aes(x = x, y = y)) +
    stat_decomp(frequency = 12, type = "multiplicative")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-2.png)
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-2.png)

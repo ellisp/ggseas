@@ -6,9 +6,14 @@ Convenience functions that let you easily do seasonal adjustment on the fly with
 Depends on the [`seasonal` package](https://cran.r-project.org/web/packages/seasonal/index.html) to give you access to X13-SEATS-ARIMA.
 
 ## Installation
-Currently only available via this GitHub repository although I might tidy it up for CRAN.  Install the usual way:
+Install the stable version the usual way from CRAN:
+
+```{r, eval = FALSE}
+install.packages("ggseas")
+```
 
 
+or the latest version (bugs and all) from GitHub:
 ```{r, eval = FALSE}
 devtools::install_github("ellisp/ggseas/pkg")
 ```
