@@ -53,3 +53,24 @@ ggplot(ap_df, aes(x = x, y = y)) +
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
      stat_stl(frequency = 12, s.window = 7)
   
+  
+  #===================ggsdc===============
+  
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+     geom_line()
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
+     geom_line(colour = "blue", size = 2) +
+     theme_light(8)
+  
+  ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+     labs(x = "", y = "Air passenger numbers") +
+     geom_point()
+  
+  ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = "periodic") +
+     geom_line()
+  
+  
+  
+  
+  
+  
