@@ -77,7 +77,27 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 #' @details etc etc etc
 #' @examples
-#' print("hello world")
+#' # sample time series data in data frame
+#' ap_df <- data.frame(
+#'    x = as.numeric(time(AirPassengers)),
+#'    y = as.numeric(AirPassengers)
+#' )
+#' 
+#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+#'    geom_line()
+#'    
+#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, 
+#'       type = "multiplicative") +
+#'    geom_line(colour = "blue", size = 2) +
+#'    theme_light(8)
+#' 
+#' ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+#'    labs(x = "", y = "Air passenger numbers") +
+#'    geom_point()
+#'    
+#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
+#'       frequency = 12, start = c(1949, 1)) +
+#'       geom_line()
 ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas"),
                   start, s.window, 
                   type = c("additive", "multiplicative")) {
@@ -112,15 +132,15 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
          }
       }
       
-      p <- ggplot(sdc, aes(x = x, y = y, colour = colour)) +
-         facet_wrap(~component, ncol = 1, scale = "free_y") 
+      p <- ggplot(sdc, aes_string(x = "x", y = "y", colour = "colour")) +
+         facet_wrap(~component, ncol = 1, scales = "free_y") 
       
       
    } else {
       # Univariate
       sdc <- ggsdc_helper(data, mapping, frequency, method, start, s.window, type)
       
-      p <- ggplot(sdc, aes(x = x, y = y)) +
+      p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
          facet_wrap(~component, ncol = 1, scale = "free_y") 
       
    }

@@ -21,24 +21,14 @@ devtools::install_github("ellisp/ggseas/pkg")
 ```
 
 
-## Usage
-So far there are three types of seasonal adjustment possible
+## Usage - seasonal adjustment on the fly
+So far there are three types of seasonal adjustment possible to be incorporated
+into a usual ggplot() command, substituting for where you'd normally have geom_line().
 
 ### X13-SEATS-ARIMA
 
 ```r
 library(ggseas)
-```
-
-```
-## Loading required package: seasonal
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```r
 # make demo data
 ap_df <- data.frame(
    x = as.numeric(time(AirPassengers)),
@@ -119,3 +109,38 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-2.png)
+
+## Usage - seasonal decomposition on the fly
+From version 0.2.0 I introduce a summary graphic decomposition, similar to what
+you'd get with stats::plot(decompose(x)), but in the ggplot2 environment.  As well
+as allowing ggplot2 look and feel of plots, you can also map a variable to the 
+colour (or color) aesthetic, to allow two difference decompositions on the same
+graphic.
+
+```r
+ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+   geom_line()
+```
+
+```
+## Warning: Removed 6 rows containing missing values (geom_path).
+```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+
+```r
+ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+   labs(x = "", y = "Air passenger numbers") +
+   geom_point()
+```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-2.png)
+
+```r
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
+      frequency = 12, start = c(1949, 1)) +
+      geom_line()
+```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-3.png)
+

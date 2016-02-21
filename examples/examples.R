@@ -88,6 +88,10 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompos
       frequency = 12, type = "multiplicative") +
    geom_line()
 
+
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
+      frequency = 12, start = c(1949, 1)) +
+   geom_line()
   
   
   
