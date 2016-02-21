@@ -112,7 +112,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ## Usage - seasonal decomposition on the fly
 From version 0.2.0 I introduce a summary graphic decomposition, similar to what
-you'd get with stats::plot(decompose(x)), but in the ggplot2 environment.  As well
+you'd get with plot(stats::decompose(x)), but in the ggplot2 environment.  As well
 as allowing ggplot2 look and feel of plots, you can also map a variable to the 
 colour (or color) aesthetic, to allow two difference decompositions on the same
 graphic.
