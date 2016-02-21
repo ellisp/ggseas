@@ -59,6 +59,9 @@ ggplot(ap_df, aes(x = x, y = y)) +
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
      geom_line()
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
+     geom_line()
+  
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
      geom_line(colour = "blue", size = 2) +
      theme_light(8)
   
@@ -67,10 +70,24 @@ ggplot(ap_df, aes(x = x, y = y)) +
      geom_point()
   
   ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = "periodic") +
+     geom_line() + geom_point()
+  
+  ggsdc(ap_df, aes(x = x, y = y), method = "seas", frequency = 12, start = c(1949, 1)) +
      geom_line()
   
   
+  ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12) +
+     geom_line()
   
+  # does it work with factors:
+  ldeaths_df$sex <- as.factor(ldeaths_df$sex)
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", frequency = 12) +
+     geom_line()
+  
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", 
+      frequency = 12, type = "multiplicative") +
+   geom_line()
+
   
   
   
