@@ -146,7 +146,7 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
       sdc <- ggsdc_helper(data, mapping, frequency, method, start, s.window, type)
       
       p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
-         facet_wrap(~component, ncol = 1, scale = "free_y") 
+         facet_wrap(~component, ncol = 1, scales = "free_y") 
       
    }
    
