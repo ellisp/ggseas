@@ -26,11 +26,8 @@ into a usual ggplot() command, substituting for where you'd normally have geom_l
 ### X13-SEATS-ARIMA
 ```{r}
 library(ggseas)
-# make demo data
-ap_df <- data.frame(
-   x = as.numeric(time(AirPassengers)),
-   y = as.numeric(AirPassengers)
-)
+# make demo data with the convenience "time series to data.frame" function tsdf()
+ap_df <- tsdf(AirPassengers)
 
 # SEATS with defaults
 ggplot(ap_df, aes(x = x, y = y)) +

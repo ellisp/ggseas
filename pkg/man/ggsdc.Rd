@@ -25,6 +25,9 @@ to the \code{seats} program from X-13-SEATS-ARIMA via the \code{seasonal} packag
 
 \item{type}{parameter to pass to \code{decompose()}}
 }
+\value{
+an object of class ggplot
+}
 \description{
 Creates a four-facet plot of seasonal decomposition showing observed, trend, seasonal and random components
 }
@@ -38,10 +41,7 @@ X13-SEATS-ARIMA seasonal decomposition (so far only with default settings).
 }
 \examples{
 # sample time series data in data frame
-ap_df <- data.frame(
-   x = as.numeric(time(AirPassengers)),
-   y = as.numeric(AirPassengers)
-)
+ap_df <- tsdf(AirPassengers)
 
 ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
    geom_line()

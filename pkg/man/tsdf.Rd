@@ -4,7 +4,7 @@
 \alias{tsdf}
 \title{Time series to data frame}
 \usage{
-tsdf(timeseries, colname = "TimePeriod")
+tsdf(timeseries, colname = "x")
 }
 \arguments{
 \item{timeseries}{an object of class ts or mts}

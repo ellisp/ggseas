@@ -42,10 +42,7 @@ the default plot specification, e.g. \code{\link{borders}}.}
 Conducts X13-SEATS-ARIMA seasonal adjustment on the fly for ggplot2
 }
 \examples{
-ap_df <- data.frame(
-      x = as.numeric(time(AirPassengers)),
-      y = as.numeric(AirPassengers)
-   )
+ap_df <- tsdf(AirPassengers)
 
 # SEATS with defaults
 ggplot(ap_df, aes(x = x, y = y)) +

@@ -74,6 +74,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' @param start starting time for the data; only needed if \code{method = 'seas'}.
 #' @param s.window parameter to pass to \code{stl()}
 #' @param type parameter to pass to \code{decompose()}
+#' @return an object of class ggplot
 #' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition
 #' on the variable mapped to the y aesthetic, grouped by the variable (if any)

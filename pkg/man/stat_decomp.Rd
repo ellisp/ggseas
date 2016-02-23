@@ -46,10 +46,7 @@ adjustment and is not recommended if you have access to X13-SEATS-ARIMA
 over time, or take outliers into account in calculating seasonality.
 }
 \examples{
-ap_df <- data.frame(
-      x = as.numeric(time(AirPassengers)),
-      y = as.numeric(AirPassengers)
-   )
+ap_df <- tsdf(AirPassengers)
 
 # default additive decomposition (doesn't work well in this case!):
 ggplot(ap_df, aes(x = x, y = y)) +

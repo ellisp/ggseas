@@ -42,10 +42,7 @@ Cleveland et al.  This has no default and must be chosen.}
 Conducts seasonal adjustment on the fly for ggplot2, from LOESS seasonal decomposition
 }
 \examples{
-ap_df <- data.frame(
-      x = as.numeric(time(AirPassengers)),
-      y = as.numeric(AirPassengers)
-   )
+ap_df <- tsdf(AirPassengers)
 
 # periodic if fixed seasonality; doesn't work well:
 ggplot(ap_df, aes(x = x, y = y)) +
