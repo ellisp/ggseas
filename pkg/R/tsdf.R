@@ -14,7 +14,7 @@
 #' 
 #' ld <- cbind(fdeaths, mdeaths)
 #' head(tsdf(ld))
-tsdf <- function(timeseries, colname = "TimePeriod") {
+tsdf <- function(timeseries, colname = "x") {
    ct <- class(timeseries)
    
    if (! "ts" %in% ct){
@@ -24,14 +24,14 @@ tsdf <- function(timeseries, colname = "TimePeriod") {
    if(length(ct) == 1){
       # univariate
       output <- data.frame(
-         TimePeriod = time(timeseries),
-         Value = as.numeric(timeseries)
+         TimePeriod = as.numeric(time(timeseries)),
+         y = as.numeric(timeseries)
       )
-      names(timeseries)[1] <- colname
+      names(output)[1] <- colname
    } else {
       # multivariate
       output <- data.frame(
-         TimePeriod = time(timeseries)
+         TimePeriod = as.numeric(time(timeseries))
       )
       for(i in 1:ncol(timeseries)){
          output <- cbind(output, as.numeric(timeseries[ , i]))

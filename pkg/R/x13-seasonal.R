@@ -31,10 +31,7 @@ StatSeas <- ggproto("StatSeas", Stat,
 #' @family time series stats for ggplot2
 #' @seealso \code{\link{seas}}
 #' @examples
-#' ap_df <- data.frame(
-#'       x = as.numeric(time(AirPassengers)),
-#'       y = as.numeric(AirPassengers)
-#'    )
+#' ap_df <- tsdf(AirPassengers)
 #' 
 #' # SEATS with defaults
 #' ggplot(ap_df, aes(x = x, y = y)) +

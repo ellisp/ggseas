@@ -83,10 +83,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' X13-SEATS-ARIMA seasonal decomposition (so far only with default settings).
 #' @examples
 #' # sample time series data in data frame
-#' ap_df <- data.frame(
-#'    x = as.numeric(time(AirPassengers)),
-#'    y = as.numeric(AirPassengers)
-#' )
+#' ap_df <- tsdf(AirPassengers)
 #' 
 #' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
 #'    geom_line()

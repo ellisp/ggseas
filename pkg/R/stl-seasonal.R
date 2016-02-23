@@ -28,10 +28,7 @@ StatSTL <- ggproto("StatSTL", Stat,
 #' @inheritParams ggplot2::stat_identity
 #' @family time series stats for ggplot2
 #' @examples
-#' ap_df <- data.frame(
-#'       x = as.numeric(time(AirPassengers)),
-#'       y = as.numeric(AirPassengers)
-#'    )
+#' ap_df <- tsdf(AirPassengers)
 #' 
 #' # periodic if fixed seasonality; doesn't work well:
 #' ggplot(ap_df, aes(x = x, y = y)) +
