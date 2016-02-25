@@ -29,7 +29,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
       model <- seas(y)
       y2 <- series(model, "s12", reeval = FALSE)
       y3 <- series(model, "s10", reeval = FALSE)
-      y4 <- y / y2 / y3
+      y4 <- y - y2 * y3
       
    }
    
@@ -74,7 +74,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' @param start starting time for the data; only needed if \code{method = 'seas'}.
 #' @param s.window parameter to pass to \code{stl()}
 #' @param type parameter to pass to \code{decompose()}
-#' @return an object of class ggplot
+#' @return an object of class ggplot with four facets
 #' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition
 #' on the variable mapped to the y aesthetic, grouped by the variable (if any)
@@ -82,6 +82,11 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' the equivalent of plot(stats::decompose(x)) but in the ggplot2 environment for themes,
 #' polishing etc; and to overlay decompositions on the same graphic; and with the 
 #' X13-SEATS-ARIMA seasonal decomposition (so far only with default settings).
+#' 
+#' The "seasonal" component can be either multiplicative (in which case it will
+#' in a small range of values around one) or additive (in which case it will be
+#' on the scale of the original data), depending on the settings.
+#' 
 #' @examples
 #' # sample time series data in data frame
 #' ap_df <- tsdf(AirPassengers)

@@ -1,9 +1,6 @@
 
 
-ap_df <- data.frame(
-   x = as.numeric(time(AirPassengers)),
-   y = as.numeric(AirPassengers)
-)
+ap_df <- tsdf(AirPassengers)
 
 
 
@@ -78,6 +75,12 @@ ggplot(ap_df, aes(x = x, y = y)) +
   
   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12) +
      geom_line()
+  
+  
+  ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
+        frequency = 12, start = c(1949, 1)) +
+     geom_line()
+  
   
   # does it work with factors:
   ldeaths_df$sex <- as.factor(ldeaths_df$sex)
