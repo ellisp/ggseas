@@ -20,24 +20,24 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
       model <- stl(y, s.window = s.window)
       y2 <- as.numeric(model$time.series[ , 2])
       y3 <- as.numeric(model$time.series[ , 1])
-      y4 <- as.numeric(model$time.series[ , 3])
+      y4 <- as.numeric(model$time.series[ , 3]) # not always correct
    }
    
    if(method == "seas"){
-      # not sure this is robust enough. Is the residual always just multiplicative?
       y <- ts(data[ , as.character(mapping$y)], frequency = frequency, start = start)
       model <- seas(y)
-      y2 <- series(model, "s12", reeval = FALSE)
-      y3 <- series(model, "s10", reeval = FALSE)
-      y4 <- y - y2 * y3
-      
+      d <- as.data.frame(model$data)
+      y2 <- d$trend
+      y3 <- y - d$seasonaladj
+      y4 <- d$irregular
+
    }
    
    sdc <- rbind(
       data.frame(x = data[ , as.character(mapping$x)],
                  y = as.numeric(y),
                  component = factor("observed", 
-                                    levels = c("observed", "trend", "seasonal", "random")))  ,
+                                    levels = c("observed", "trend", "seasonal", "irregular")))  ,
       data.frame(x = data[ , as.character(mapping$x)],
                  y = y2,
                  component = "trend",
@@ -48,7 +48,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
                  stringsAsFactors = FALSE),
       data.frame(x = data[ , as.character(mapping$x)],
                  y = y4,
-                 component = "random",
+                 component = "irregular",
                  stringsAsFactors = FALSE)
    )
    
@@ -109,10 +109,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas"),
                   start, s.window, 
                   type = c("additive", "multiplicative")) {
-   # data = ldeaths_df; mapping = aes(x = YearMon, y = deaths, colour = sex)
-   # frequency = 12; method = "decompose"; type = "multiplicative"; start = c(1949,1); s.window = 7
-   # data = ap_df; mapping = aes(x = x, y = y)
-   
+
    if(is.null(frequency)){
       stop("frequency is needed")
    }
@@ -125,8 +122,13 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
    if(!is.null(mapping$colour)){
       # Multivariate - a dimension mapped to colour
       
+      colvar <- as.character(mapping$colour)
+      if(length(unique(table(data[ , colvar]))) > 1 & method == "seas"){
+         stop("Time series are of different lengths.  Cannot use method 'seas' in this situation, try 'stl' instead.")
+      }
+      
       # make a convenient vector of the variable mapped to colour
-      cv <- data[ , as.character(mapping$colour)]
+      cv <- as.character(data[ , colvar])
       all_cols <- unique(cv)
       for(this_col in all_cols){
          this_data <- data[cv == this_col, ]
