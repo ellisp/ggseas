@@ -109,34 +109,12 @@ ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), frequency = 4,
       start = c(1987, 2), method = "seas") +
    geom_line()
 
-library(dplyr)
-nzbpm <- ImportTS2(TRED, "BPM6 Quarterly (year ended in quarter), Balance of payments selected series (Qrtly-Mar/Jun/Sep/Dec)") %>%
-   select(-CV1, - Obs_Status) %>%
-   rename(Category = CV2) %>%
-   filter(!is.na(Value)) %>%
-   mutate(Category = gsub("Current account year ended in quarter; ", "", Category, fixed = TRUE),
-          Direction = ifelse(grepl("Exports", Category), "Exports", "Balance"),
-          Direction = ifelse(grepl("Imports", Category), "Imports", Direction)
-          ) %>%
-   filter(Direction != "Balance") %>%
-   mutate(Category = gsub("Exports ", "", Category),
-          Category = gsub("Exports; ", "", Category),
-          Category = gsub("Imports ", "", Category),
-          Category = gsub("Imports; ", "", Category)) %>%
-   mutate(Sector = ifelse(grepl("Services", Category), "Services", "Goods (fob)")) %>%
-   mutate(Category = gsub("Services; ", "", Category),
-          Category = gsub("Goods; (fob) ", "", Category, fixed = TRUE)) %>%
-   mutate(Category = gsub("^total", "Total", Category))
-
-head(nzbpm)
-unique(nzbpm[ , c("Category", "Direction", "Sector")])
-
-ggsdc(nzbpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
+ggsdc(nzbop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
    geom_line() +
    theme(legend.position = "none")
 
 
-bpm <- subset(nzbpm, Direction == "Exports" & Sector == "Services" & Category != "Total")
+bpm <- subset(nzbop, Direction == "Exports" & Sector == "Services" & Category != "Total")
 
 ggsdc(bpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
    geom_line() 
@@ -150,5 +128,16 @@ ggsdc(bpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4,
       method = "seas", start = c(1972, 1)) +
    geom_line() 
 
+ggsdc(subset(nzbop, Category == "Travel"),
+             aes(x = TimePeriod, y = Value, colour = Direction),
+             frequency = 4, s.window = 7) +
+   geom_line()
 
-unique(nzbpm$Category)
+
+ggsdc(subset(nzbop, Category == "Travel"),
+      aes(x = TimePeriod, y = Value, colour = Direction),
+      frequency = 4, method = "seas", start = c(1972, 1)) +
+   geom_line()
+
+
+unique(nzbop$Category)

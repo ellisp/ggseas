@@ -98,5 +98,14 @@ ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
 ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
       frequency = 12, start = c(1949, 1)) +
       geom_line()
+
+ggsdc(subset(nzbpm, Category == "Travel"),
+             aes(x = TimePeriod, y = Value, colour = Direction),
+             frequency = 4, s.window = 7) +
+   geom_line() +
+   scale_y_continuous("NZ$ millions", label = comma) +
+   labs(x = "") +
+   ggtitle("New Zealand 'travel' balance of payments - greater seasonality in exports than imports")
+
 ```
 

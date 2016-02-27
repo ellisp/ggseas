@@ -1,6 +1,6 @@
 #' Time series to data frame
 #' 
-#' Convert a ts object to data.frame with columns for time period and
+#' Convert a ts object to data.frame with columns for time period and the original data
 #' 
 #' @export
 #' @param timeseries an object of class ts or mts 

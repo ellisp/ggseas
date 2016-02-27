@@ -15,7 +15,7 @@ tsdf(timeseries, colname = "x")
 a data.frame with the same number of rows as the original time series
 }
 \description{
-Convert a ts object to data.frame with columns for time period and
+Convert a ts object to data.frame with columns for time period and the original data
 }
 \details{
 A convenience function to create a data frame from a time series or

@@ -26,7 +26,7 @@ to the \code{seats} program from X-13-SEATS-ARIMA via the \code{seasonal} packag
 \item{type}{parameter to pass to \code{decompose()}}
 }
 \value{
-an object of class ggplot
+an object of class ggplot with four facets
 }
 \description{
 Creates a four-facet plot of seasonal decomposition showing observed, trend, seasonal and random components
@@ -38,6 +38,10 @@ mapped to the colour or color aesthetic.  This allows the user to perform
 the equivalent of plot(stats::decompose(x)) but in the ggplot2 environment for themes,
 polishing etc; and to overlay decompositions on the same graphic; and with the 
 X13-SEATS-ARIMA seasonal decomposition (so far only with default settings).
+
+The "seasonal" component can be either multiplicative (in which case it will
+in a small range of values around one) or additive (in which case it will be
+on the scale of the original data), depending on the settings.
 }
 \examples{
 # sample time series data in data frame
@@ -58,6 +62,18 @@ ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
 ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
       frequency = 12, start = c(1949, 1)) +
       geom_line()
+      
+ggsdc(subset(nzbop, Category == "Travel"),
+      aes(x = TimePeriod, y = Value, colour = Direction),
+      frequency = 4, method = "seas", start = c(1972, 1)) +
+      geom_line()
+      
+bop <- subset(nzbop, Direction == "Exports" & Sector == "Services" & Category != "Total")
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
+      geom_line() 
+      
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
+      geom_line() 
 }
 \seealso{
 \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
