@@ -1,3 +1,6 @@
+
+
+#' @import stats
 ggsdc_helper <- function(data, mapping, frequency, method, start, s.window, 
                          type = c("additive", "multiplicative")){
    data <- data[order(data[ , as.character(mapping$x)]), ]
