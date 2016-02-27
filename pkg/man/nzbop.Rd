@@ -3,8 +3,8 @@
 \docType{data}
 \name{nzbop}
 \alias{nzbop}
-\title{New Zealand Balance of Payments selected variables 1972 to 2015}
-\format{An object of class \code{data.frame} with 6063 rows and 5 columns.}
+\title{New Zealand Balance of Payments major components 1971Q2 to 2015Q2}
+\format{An object of class \code{data.frame} with 3676 rows and 5 columns.}
 \source{
 Statistics New Zealand \url{http://www.stats.govt.nz/browse_for_stats/economic_indicators/balance_of_payments/info-releases.aspx}
 }
@@ -12,8 +12,7 @@ Statistics New Zealand \url{http://www.stats.govt.nz/browse_for_stats/economic_i
 nzbop
 }
 \description{
-Selected exports and imports series from New Zealand's "BPM6 Quarterly (year ended in quarter), Balance of 
-payments selected series (Qrtly-Mar/Jun/Sep/Dec)".
+New Zealand's "BPM6 Quarterly, Balance of payments major components (Qrtly-Mar/Jun/Sep/Dec)".
 }
 \details{
 "BPM6" refers to the sixth edition of the IMF's Balance of Payments and
@@ -23,11 +22,10 @@ New Zealand to prepare these data.
 Note:
 \itemize{
   \item 'Value' is in millions of New Zealand dollars and is not adjusted for inflation.
-  \item 'nei' means 'not elsewhere included'.
-  \item 'Category' items are not mutually exclusive; for example, 'Travel' is a 
-  superset of 'Travel; Business'.
-  \item TimePeriod is the last day of the reference period ie \code{1972-03-31}
-  means the first three months of 1972.
+  \item 'fob' means 'free on board'.
+  \item 'inv.' stands for investment
+  \item TimePeriod is the last day of the quarterly reference period ie \code{1971-06-30}
+  means the fourth, fifth and six months of 1971.
 }
 
 This dataset was downloaded from \url{http://www.stats.govt.nz/infoshare/} and 
@@ -36,9 +34,9 @@ transformed in the following way:
 \itemize{
   \item missing values were filtered out (ie of series that started later 
   than the longest series)
-  \item estimates of balance were removed, leaving only exports and imports
-  \item the single variable categorisation was split into three (Sector, Direction
-   and Category) in accordance with 'tidy data' principles
+  \item a 'Balance' indicator variable was added for easier manipulation and filtering
+  \item the single variable categorisation was split into two (Account
+   and Category) to make it tidier.
   }
 }
 \keyword{datasets}

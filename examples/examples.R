@@ -114,30 +114,43 @@ ggsdc(nzbop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s
    theme(legend.position = "none")
 
 
-bpm <- subset(nzbop, Direction == "Exports" & Sector == "Services" & Category != "Total")
+bop <- subset(nzbop, Account = "Current account")
 
-ggsdc(bpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
    geom_line() 
 
 
-ggsdc(bpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
    geom_line() 
 
 
-ggsdc(bpm, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
-      method = "seas", start = c(1972, 1)) +
+# don't run - tests for an error message:
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
+      method = "seas", start = c(1971, 2)) +
    geom_line() 
 
-ggsdc(subset(nzbop, Category == "Travel"),
-             aes(x = TimePeriod, y = Value, colour = Direction),
+ggsdc(subset(nzbop, Account == "Financial account"),
+             aes(x = TimePeriod, y = Value, colour = Category),
              frequency = 4, s.window = 7) +
    geom_line()
 
 
-ggsdc(subset(nzbop, Category == "Travel"),
-      aes(x = TimePeriod, y = Value, colour = Direction),
-      frequency = 4, method = "seas", start = c(1972, 1)) +
+View(subset(nzbop, Account == "Capital account"))
+
+ca <- subset(nzbop, Account == "Current account" & !Balance)
+
+ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category),
+      frequency = 4, method = "seas", start = c(1971, 2)) +
    geom_line()
 
 
-unique(nzbop$Category)
+serv <- subset(nzbop, Account == "Current account" & 
+                  Category %in% c("Services; Exports total", "Services; Imports total"))
+ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+      method = "seas", start = c(1971, 2), frequency = 4) +
+   geom_line()
+
+ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+      method = "stl", s.window = 7, frequency = 4) +
+   geom_line()
+

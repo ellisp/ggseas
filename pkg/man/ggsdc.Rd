@@ -63,13 +63,15 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas",
       frequency = 12, start = c(1949, 1)) +
       geom_line()
       
-ggsdc(subset(nzbop, Category == "Travel"),
-      aes(x = TimePeriod, y = Value, colour = Direction),
-      frequency = 4, method = "seas", start = c(1972, 1)) +
-      geom_line()
+serv <- subset(nzbop, Account == "Current account" & 
+            Category \%in\% c("Services; Exports total", "Services; Imports total"))
+ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+      method = "seas", start = c(1971, 2), frequency = 4) +
+   geom_line()
       
-bop <- subset(nzbop, Direction == "Exports" & Sector == "Services" & Category != "Total")
-ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
+bop <- subset(nzbop, Account == "Current account" & !Balance)
+ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
+   method = "decomp", type = "multiplicative") +
       geom_line() 
       
 ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +

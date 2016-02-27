@@ -20,7 +20,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
       model <- stl(y, s.window = s.window)
       y2 <- as.numeric(model$time.series[ , 2])
       y3 <- as.numeric(model$time.series[ , 1])
-      y4 <- as.numeric(model$time.series[ , 3]) # not always correct
+      y4 <- as.numeric(model$time.series[ , 3]) 
    }
    
    if(method == "seas"){
@@ -29,7 +29,8 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
       d <- as.data.frame(model$data)
       y2 <- d$trend
       y3 <- y - d$seasonaladj
-      y4 <- d$irregular
+      # y4 <- d$irregular # problem with this is sometimes it's a multiplier, sometimes additive
+      y4 <- y - y2 - y3
 
    }
    
@@ -107,13 +108,15 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #'       frequency = 12, start = c(1949, 1)) +
 #'       geom_line()
 #'       
-#' ggsdc(subset(nzbop, Category == "Travel"),
-#'       aes(x = TimePeriod, y = Value, colour = Direction),
-#'       frequency = 4, method = "seas", start = c(1972, 1)) +
-#'       geom_line()
+#' serv <- subset(nzbop, Account == "Current account" & 
+#'             Category %in% c("Services; Exports total", "Services; Imports total"))
+#' ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+#'       method = "seas", start = c(1971, 2), frequency = 4) +
+#'    geom_line()
 #'       
-#' bop <- subset(nzbop, Direction == "Exports" & Sector == "Services" & Category != "Total")
-#' ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
+#' bop <- subset(nzbop, Account == "Current account" & !Balance)
+#' ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
+#'    method = "decomp", type = "multiplicative") +
 #'       geom_line() 
 #'       
 #' ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +

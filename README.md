@@ -142,13 +142,16 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas",
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-3.png)
 
 ```r
-ggsdc(subset(nzbpm, Category == "Travel"),
-             aes(x = TimePeriod, y = Value, colour = Direction),
-             frequency = 4, s.window = 7) +
+serv <- subset(nzbop, Account == "Current account" & 
+                  Category %in% c("Services; Exports total", "Services; Imports total"))
+
+ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+      method = "seas", start = c(1971, 2), frequency = 4) +
    geom_line() +
-   scale_y_continuous("NZ$ millions", label = comma) +
+   scale_y_continuous("NZ$ millions\ndecomposition by X13-SEATS-ARIMA", label = comma) +
    labs(x = "") +
-   ggtitle("New Zealand 'travel' balance of payments - greater seasonality in exports than imports")
+   ggtitle("New Zealand services balance of payments -\ngreater seasonality in exports than imports") +
+   theme_light()
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-4.png)
