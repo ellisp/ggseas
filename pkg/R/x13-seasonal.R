@@ -31,6 +31,7 @@ StatSeas <- ggproto("StatSeas", Stat,
 #' @family time series stats for ggplot2
 #' @seealso \code{\link{seas}}
 #' @examples
+#' \dontrun{
 #' ap_df <- tsdf(AirPassengers)
 #' 
 #' # SEATS with defaults
@@ -46,7 +47,7 @@ StatSeas <- ggproto("StatSeas", Stat,
 #'   facet_wrap(~sex) +
 #'   stat_seas(start = c(1974, 1), frequency = 12) +
 #'   ggtitle("Seasonally adjusted lung deaths")
-
+#'   }
 stat_seas <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", show.legend = NA, 
                     inherit.aes = TRUE, start, frequency, x13_params = NULL, ...) {

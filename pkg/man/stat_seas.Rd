@@ -42,6 +42,7 @@ the default plot specification, e.g. \code{\link{borders}}.}
 Conducts X13-SEATS-ARIMA seasonal adjustment on the fly for ggplot2
 }
 \examples{
+\dontrun{
 ap_df <- tsdf(AirPassengers)
 
 # SEATS with defaults
@@ -57,6 +58,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
   facet_wrap(~sex) +
   stat_seas(start = c(1974, 1), frequency = 12) +
   ggtitle("Seasonally adjusted lung deaths")
+  }
 }
 \seealso{
 \code{\link{seas}}

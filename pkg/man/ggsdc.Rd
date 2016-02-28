@@ -59,6 +59,7 @@ ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
    labs(x = "", y = "Air passenger numbers") +
    geom_point()
    
+\dontrun{      
 ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
       frequency = 12, start = c(1949, 1)) +
       geom_line()
@@ -68,6 +69,7 @@ serv <- subset(nzbop, Account == "Current account" &
 ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
       method = "seas", start = c(1971, 2), frequency = 4) +
    geom_line()
+}
       
 bop <- subset(nzbop, Account == "Current account" & !Balance)
 ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
