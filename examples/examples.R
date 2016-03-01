@@ -3,8 +3,18 @@
 ap_df <- tsdf(AirPassengers)
 
 
+#=========stat_rollmean==========
+ggplot(ap_df, aes(x = x, y = y)) +
+    stat_rollmean(width = 12)
 
 
+ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+   geom_point() +
+   facet_wrap(~sex) +
+   stat_rollmean(width = 12, align = "center") +
+   ggtitle("Rolling annual average lung deaths")
+
+#=================stat_decomp=============
 
 ggplot(ap_df, aes(x = x, y = y)) +
    stat_seas(start = c(1949, 1), frequency = 12)
