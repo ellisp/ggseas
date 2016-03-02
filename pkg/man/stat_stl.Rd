@@ -61,6 +61,6 @@ stat_stl(frequency = 12, s.window = 7) +
 }
 \seealso{
 Other time.series.stats.for.ggplot2: \code{\link{stat_decomp}},
-  \code{\link{stat_rollmean}}, \code{\link{stat_seas}}
+  \code{\link{stat_rollapplyr}}, \code{\link{stat_seas}}
 }
 

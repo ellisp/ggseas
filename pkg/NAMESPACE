@@ -2,10 +2,11 @@
 
 export(ggsdc)
 export(stat_decomp)
-export(stat_rollmean)
+export(stat_rollapplyr)
 export(stat_seas)
 export(stat_stl)
 export(tsdf)
 import(ggplot2)
 import(seasonal)
 import(stats)
+importFrom(zoo,rollapplyr)

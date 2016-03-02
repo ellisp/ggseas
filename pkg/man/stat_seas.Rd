@@ -64,6 +64,6 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 \code{\link{seas}}
 
 Other time.series.stats.for.ggplot2: \code{\link{stat_decomp}},
-  \code{\link{stat_rollmean}}, \code{\link{stat_stl}}
+  \code{\link{stat_rollapplyr}}, \code{\link{stat_stl}}
 }
 

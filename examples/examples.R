@@ -5,14 +5,14 @@ ap_df <- tsdf(AirPassengers)
 
 #=========stat_rollmean==========
 ggplot(ap_df, aes(x = x, y = y)) +
-    stat_rollmean(width = 12)
+    stat_rollapplyr(width = 12)
 
 
 ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
    geom_point() +
    facet_wrap(~sex) +
-   stat_rollmean(width = 12, align = "center") +
-   ggtitle("Rolling annual average lung deaths")
+   stat_rollapplyr(width = 12, align = "center", FUN = median) +
+   ggtitle("Rolling annual median lung deaths")
 
 #=================stat_decomp=============
 
