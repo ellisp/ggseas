@@ -46,19 +46,26 @@ StatSeas <- ggproto("StatSeas", Stat,
 #' \dontrun{
 #' ap_df <- tsdf(AirPassengers)
 #' 
-#' # SEATS with defaults
+#' # SEATS with defaults:
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_seas(start = c(1949, 1), frequency = 12)
 #'    
-#' # X11 with no outlier treatment
+#' # X11 with no outlier treatment:
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'   stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL))
-#'    
+#'
+#' # Multiple time series example:    
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   geom_point() +
 #'   facet_wrap(~sex) +
 #'   stat_seas(start = c(1974, 1), frequency = 12) +
 #'   ggtitle("Seasonally adjusted lung deaths")
+#'   
+#' # example use of index:  
+#' ggplot(ap_df, aes(x = x, y = y)) +
+#'   stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL),
+#'   index.ref = 1, index.basis = 1000) +
+#'   labs(y = "Seasonally adjusted index\n(first observation = 1000)")
 #'   }
 stat_seas <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", show.legend = NA, 

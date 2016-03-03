@@ -26,7 +26,7 @@ StatRollapplyr <- ggproto("StatRollapplyr", Stat,
 #' @export
 #' @import ggplot2
 #' @importFrom zoo rollapplyr
-#' @param width The width
+#' @param width The width to which the rolling version of FUN is applied
 #' @param align specifies whether the transformed series should be left or 
 #' right-aligned or centered compared to the rolling window of observations
 #' @param FUN summary function, usually some kind of average, to apply on a rolling basis

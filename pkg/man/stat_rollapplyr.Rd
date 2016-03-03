@@ -30,7 +30,7 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
 
-\item{width}{The width}
+\item{width}{The width to which the rolling version of FUN is applied}
 
 \item{align}{specifies whether the transformed series should be left or 
 right-aligned or centered compared to the rolling window of observations}

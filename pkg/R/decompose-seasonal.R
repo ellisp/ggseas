@@ -53,19 +53,26 @@ StatDecomp <- ggproto("StatDecomp", Stat,
 #' @examples
 #' ap_df <- tsdf(AirPassengers)
 #' 
-#' # default additive decomposition (doesn't work well in this case!):
+#' # Default additive decomposition (doesn't work well in this case!):
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_decomp(frequency = 12)
 #' 
-#' # multiplicative decomposition, more appropriate:
+#' # Multiplicative decomposition, more appropriate:
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_decomp(frequency = 12, type = "multiplicative")
 #' 
+#' # Multiple time series example:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   geom_point() +
 #'   facet_wrap(~sex) +
 #'   stat_decomp(frequency = 12) +
 #'   ggtitle("Seasonally adjusted lung deaths")
+#'
+#' # Example using index:
+#' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+#'   facet_wrap(~sex) +
+#'   stat_rollapplyr(width = 12, align = "center", index.ref = 1:12, index.basis = 1000) +
+#'   ggtitle("Rolling annual median lung deaths, indexed (average month in 1974 = 1000)")
 #'
 stat_decomp <- function(mapping = NULL, data = NULL, geom = "line",
                       position = "identity", show.legend = NA, 

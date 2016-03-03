@@ -50,12 +50,17 @@ StatSTL <- ggproto("StatSTL", Stat,
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_stl(frequency = 12, s.window = 7)
 #' 
+#' # Multiple time series example:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
-#' geom_point() +
-#'   facet_wrap(~sex) +
-#' stat_stl(frequency = 12, s.window = 7) +
+#'    geom_point() +
+#'    facet_wrap(~sex) +
+#'    stat_stl(frequency = 12, s.window = 7) +
 #'    ggtitle("Seasonally adjusted lung deaths")
 #'
+#' # Index so first value is 100:
+#' ggplot(ap_df, aes(x = x, y = y)) +
+#'    stat_stl(frequency = 12, s.window = 7, index.ref = 1)
+
 stat_stl <- function(mapping = NULL, data = NULL, geom = "line",
                      position = "identity", show.legend = NA, 
                      inherit.aes = TRUE, frequency, s.window, 

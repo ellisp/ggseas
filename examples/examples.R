@@ -1,4 +1,5 @@
-
+library(Cairo)
+CairoPDF("examples/examples.pdf", 11, 8)
 
 ap_df <- tsdf(AirPassengers)
 
@@ -123,104 +124,136 @@ print(
   
   #===================ggsdc===============
   
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
      geom_line()
+  )
+  
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
      geom_line()
+   )
   
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
      geom_line(colour = "blue", size = 2) +
      theme_light(8)
+  )
   
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
      labs(x = "", y = "Air passenger numbers") +
      geom_point()
+  )
   
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = "periodic") +
      geom_line() + geom_point()
+  )
   
+  print(
   ggsdc(ap_df, aes(x = x, y = y), method = "seas", frequency = 12, start = c(1949, 1)) +
      geom_line()
+  )
   
-  
+  print(
   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12) +
      geom_line()
+  )
   
-  
+  print(
   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
         frequency = 12, start = c(1949, 1)) +
      geom_line()
-  
+  )
   
   # does it work with factors:
   ldeaths_df$sex <- as.factor(ldeaths_df$sex)
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", frequency = 12) +
+  print(
+     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", frequency = 12) +
      geom_line()
+  )
   
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", 
+  print(
+   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", 
       frequency = 12, type = "multiplicative") +
    geom_line()
+)
 
-
+  print(
 ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
       frequency = 12, start = c(1949, 1)) +
    geom_line()
-  
+  )
   
 
 library(mbieDBmisc)
 TRED <- odbcConnect("TRED_Prod")
 tmp <- ImportTS2(TRED, Dataset_ID = 1)
+detach("package:mbieDBmisc", unload = TRUE)
+detach("package:mbie", unload = TRUE)
 
+print(
 ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), frequency = 4, s.window = 7) +
    geom_line()
+)
 
+print(
 ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), frequency = 4, 
       start = c(1987, 2), method = "seas") +
    geom_line()
+)
 
+print(
 ggsdc(nzbop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
    geom_line() +
    theme(legend.position = "none")
-
+)
 
 bop <- subset(nzbop, Account = "Current account")
 
+print(
 ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, method = "decomp") +
    geom_line() 
+)
 
-
+print(
 ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
    geom_line() 
-
+)
 
 # don't run - tests for an error message:
-ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
-      method = "seas", start = c(1971, 2)) +
-   geom_line() 
+# ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
+#       method = "seas", start = c(1971, 2)) +
+#    geom_line() 
 
+print(
 ggsdc(subset(nzbop, Account == "Financial account"),
              aes(x = TimePeriod, y = Value, colour = Category),
              frequency = 4, s.window = 7) +
    geom_line()
-
-
-View(subset(nzbop, Account == "Capital account"))
+)
 
 ca <- subset(nzbop, Account == "Current account" & !Balance)
 
-ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category),
+print(
+   ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category),
       frequency = 4, method = "seas", start = c(1971, 2)) +
    geom_line()
-
+)
 
 serv <- subset(nzbop, Account == "Current account" & 
                   Category %in% c("Services; Exports total", "Services; Imports total"))
+print(
 ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
       method = "seas", start = c(1971, 2), frequency = 4) +
    geom_line()
+)
 
+print(
 ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
       method = "stl", s.window = 7, frequency = 4) +
    geom_line()
+)
 
+dev.off()

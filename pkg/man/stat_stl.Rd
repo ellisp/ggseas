@@ -59,12 +59,16 @@ ggplot(ap_df, aes(x = x, y = y)) +
 ggplot(ap_df, aes(x = x, y = y)) +
    stat_stl(frequency = 12, s.window = 7)
 
+# Multiple time series example:
 ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
-geom_point() +
-  facet_wrap(~sex) +
-stat_stl(frequency = 12, s.window = 7) +
+   geom_point() +
+   facet_wrap(~sex) +
+   stat_stl(frequency = 12, s.window = 7) +
    ggtitle("Seasonally adjusted lung deaths")
 
+# Index so first value is 100:
+ggplot(ap_df, aes(x = x, y = y)) +
+   stat_stl(frequency = 12, s.window = 7, index.ref = 1)
 }
 \seealso{
 Other time.series.stats.for.ggplot2: \code{\link{stat_decomp}},
