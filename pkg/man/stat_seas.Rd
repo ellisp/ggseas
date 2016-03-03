@@ -78,6 +78,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 \code{\link{seas}}
 
 Other time.series.stats.for.ggplot2: \code{\link{stat_decomp}},
-  \code{\link{stat_rollapplyr}}, \code{\link{stat_stl}}
+  \code{\link{stat_index}}, \code{\link{stat_rollapplyr}},
+  \code{\link{stat_stl}}
 }
 

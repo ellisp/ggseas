@@ -122,6 +122,13 @@ print(
      stat_stl(frequency = 12, s.window = 7)
   )
   
+  #============stat_index============
+  print(
+  ggplot(ldeaths_df, aes(x = YearMon, y = deaths, color = sex)) +
+     stat_index(index.ref = 1:12, index.basis = 1000) +
+     ylab("Deaths index\n(average of first 12 months = 1000")
+  )
+  
   #===================ggsdc===============
   
   print(

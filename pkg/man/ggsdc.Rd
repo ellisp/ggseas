@@ -25,6 +25,13 @@ to the \code{seats} program from X-13-SEATS-ARIMA via the \code{seasonal} packag
 \item{s.window}{parameter to pass to \code{stl()}}
 
 \item{type}{parameter to pass to \code{decompose()}}
+
+\item{index.ref}{if not NULL, a vector of integers indicating which elements of
+the beginning of each series to use as a reference point for converting to an index.  
+If NULL, no conversion takes place and the data are presented on the original scale.}
+
+\item{index.basis}{if index.ref is not NULL, the basis point for converting
+to an index, most commonly 100 or 1000.  See examples.}
 }
 \value{
 an object of class ggplot with four facets

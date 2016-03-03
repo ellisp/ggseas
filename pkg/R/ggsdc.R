@@ -85,6 +85,11 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' @param start starting time for the data; only needed if \code{method = 'seas'}.
 #' @param s.window parameter to pass to \code{stl()}
 #' @param type parameter to pass to \code{decompose()}
+#' @param index.ref if not NULL, a vector of integers indicating which elements of
+#' the beginning of each series to use as a reference point for converting to an index.  
+#' If NULL, no conversion takes place and the data are presented on the original scale.
+#' @param index.basis if index.ref is not NULL, the basis point for converting
+#' to an index, most commonly 100 or 1000.  See examples.
 #' @return an object of class ggplot with four facets
 #' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition

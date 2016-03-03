@@ -81,7 +81,8 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 \seealso{
 \code{\link{decompose}}
 
-Other time.series.stats.for.ggplot2: \code{\link{stat_rollapplyr}},
-  \code{\link{stat_seas}}, \code{\link{stat_stl}}
+Other time.series.stats.for.ggplot2: \code{\link{stat_index}},
+  \code{\link{stat_rollapplyr}}, \code{\link{stat_seas}},
+  \code{\link{stat_stl}}
 }
 

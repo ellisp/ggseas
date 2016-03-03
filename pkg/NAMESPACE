@@ -2,6 +2,7 @@
 
 export(ggsdc)
 export(stat_decomp)
+export(stat_index)
 export(stat_rollapplyr)
 export(stat_seas)
 export(stat_stl)
