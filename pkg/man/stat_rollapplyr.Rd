@@ -6,7 +6,7 @@
 \usage{
 stat_rollapplyr(mapping = NULL, data = NULL, geom = "line",
   position = "identity", show.legend = NA, inherit.aes = TRUE, width,
-  align = "right", FUN = mean, ...)
+  align = "right", FUN = mean, index.ref = NULL, index.basis = 100, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -37,19 +37,32 @@ right-aligned or centered compared to the rolling window of observations}
 
 \item{FUN}{summary function, usually some kind of average, to apply on a rolling basis}
 
+\item{index.ref}{if not NULL, a vector of integers indicating which elements of
+the beginning of each series to use as a reference point for converting to an index.  
+If NULL, no conversion takes place and the data are presented on the original scale.}
+
+\item{index.basis}{if index.ref is not NULL, the basis point for converting
+to an index, most commonly 100 or 1000.  See examples.}
+
 \item{...}{other arguments for the geom}
 }
 \description{
 Calculates a rolling summary, usually rolling average, on the fly for ggplot2
 }
 \details{
-blah blah blah
+Calculates a rolling summary (usually rolling average) on the fly
+for purposes of plotting with ggplot2.
 }
 \examples{
 ap_df <- tsdf(AirPassengers)
 
 ggplot(ap_df, aes(x = x, y = y)) +
    stat_rollapplyr(width = 12)
+   
+# rolling average after converting to an index, 1000 = average value
+# in the first 12 months.
+ggplot(ap_df, aes(x = x, y = y)) +
+   stat_rollapplyr(width = 12, index.ref = 1:12, index.basis = 1000)
 
 ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
   geom_point() +

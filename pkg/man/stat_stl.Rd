@@ -6,7 +6,7 @@
 \usage{
 stat_stl(mapping = NULL, data = NULL, geom = "line",
   position = "identity", show.legend = NA, inherit.aes = TRUE, frequency,
-  s.window, ...)
+  s.window, index.ref = NULL, index.basis = 100, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -35,6 +35,13 @@ the default plot specification, e.g. \code{\link{borders}}.}
 \item{s.window}{either the character string \code{"periodic"} or the span (in lags) of the 
 loess window for seasonal extraction, which should be odd and at least 7, according to
 Cleveland et al.  This has no default and must be chosen.}
+
+\item{index.ref}{if not NULL, a vector of integers indicating which elements of
+the beginning of each series to use as a reference point for converting to an index.  
+If NULL, no conversion takes place and the data are presented on the original scale.}
+
+\item{index.basis}{if index.ref is not NULL, the basis point for converting
+to an index, most commonly 100 or 1000.  See examples.}
 
 \item{...}{other arguments for the geom}
 }

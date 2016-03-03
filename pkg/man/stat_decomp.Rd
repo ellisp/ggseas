@@ -6,7 +6,8 @@
 \usage{
 stat_decomp(mapping = NULL, data = NULL, geom = "line",
   position = "identity", show.legend = NA, inherit.aes = TRUE, frequency,
-  type = c("additive", "multiplicative"), ...)
+  type = c("additive", "multiplicative"), index.ref = NULL,
+  index.basis = 100, ...)
 }
 \arguments{
 \item{mapping}{The aesthetic mapping, usually constructed with
@@ -33,6 +34,13 @@ the default plot specification, e.g. \code{\link{borders}}.}
 \item{frequency}{The frequency for the time series}
 
 \item{type}{The type of seasonal component}
+
+\item{index.ref}{if not NULL, a vector of integers indicating which elements of
+the beginning of each series to use as a reference point for converting to an index.  
+If NULL, no conversion takes place and the data are presented on the original scale.}
+
+\item{index.basis}{if index.ref is not NULL, the basis point for converting
+to an index, most commonly 100 or 1000.  See examples.}
 
 \item{...}{other arguments for the geom}
 }

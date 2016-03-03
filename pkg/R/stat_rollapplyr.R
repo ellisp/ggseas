@@ -34,12 +34,13 @@ StatRollapplyr <- ggproto("StatRollapplyr", Stat,
 #' the beginning of each series to use as a reference point for converting to an index.  
 #' If NULL, no conversion takes place and the data are presented on the original scale.
 #' @param index.basis if index.ref is not NULL, the basis point for converting
-#' to an index.  See examples.
+#' to an index, most commonly 100 or 1000.  See examples.
 #' @param ... other arguments for the geom
 #' @inheritParams ggplot2::stat_identity
 #' @family time series stats for ggplot2
 #' @seealso \code{\link{decompose}}
-#' @details blah blah blah
+#' @details Calculates a rolling summary (usually rolling average) on the fly
+#' for purposes of plotting with ggplot2.
 #' @examples
 #' ap_df <- tsdf(AirPassengers)
 #' 

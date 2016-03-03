@@ -4,62 +4,122 @@ ap_df <- tsdf(AirPassengers)
 
 
 #=========stat_rollmean==========
-ggplot(ap_df, aes(x = x, y = y)) +
+print(
+   ggplot(ap_df, aes(x = x, y = y)) +
     stat_rollapplyr(width = 12)
+   )
 
 
-ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+
+print(
+   ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+   facet_wrap(~sex) +
+   stat_rollapplyr(width = 12, align = "center", index.ref = 1:12, index.basis = 1000) +
+   ggtitle("Rolling annual median lung deaths, indexed (average month in 1974 = 1000)")
+   )
+
+print(
+   ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
    geom_point() +
    facet_wrap(~sex) +
    stat_rollapplyr(width = 12, align = "center", FUN = median) +
    ggtitle("Rolling annual median lung deaths")
+   )
 
 #=================stat_decomp=============
 
-ggplot(ap_df, aes(x = x, y = y)) +
-   stat_seas(start = c(1949, 1), frequency = 12)
-
- ggplot(ap_df, aes(x = x, y = y)) +
-    stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL))
-
  # default additive decomposition (doesn't work well in this case!):
- ggplot(ap_df, aes(x = x, y = y)) +
+ print(
+    ggplot(ap_df, aes(x = x, y = y)) +
      stat_decomp(frequency = 12)
+ )
  
  # multiplicative decomposition, more appropriate:
+ print(
  ggplot(ap_df, aes(x = x, y = y)) +
     stat_decomp(frequency = 12, type = "multiplicative")
+ )
  
+ # multiplicative decomposition with index
+ print(
+ ggplot(ap_df, aes(x = x, y = y)) +
+    stat_decomp(frequency = 12, type = "multiplicative", 
+                index.ref = 1:12, index.basis = 1000) +
+    labs(y = "Seasonally adjusted, index\n(first 12 months average = 1000")
+ )
 
+
+ print(
+  ggplot(ldeaths_df, aes(x = YearMon, y = deaths, color = sex)) +
+    stat_decomp(frequency = 12, index.ref = 1) +
+     labs(y = "Deaths index (Jan 1974 = 100)")
+ )
+  
  #=======================stl=================
   # periodic if fixed seasonality; doesn't work well:
-  ggplot(ap_df, aes(x = x, y = y)) +
+ print( 
+ ggplot(ap_df, aes(x = x, y = y)) +
      stat_stl(frequency = 12, s.window = "periodic")
   
+ )
   # seasonality varies a bit over time, works better:
-  ggplot(ap_df, aes(x = x, y = y)) +
+ print( 
+ ggplot(ap_df, aes(x = x, y = y)) +
      stat_stl(frequency = 12, s.window = 7)
-  
+ )
+ 
+ print(
+  ggplot(ap_df, aes(x = x, y = y)) +
+     stat_stl(frequency = 12, s.window = 7, index.ref = 1)
+ )
+ 
+ print(
   ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
     geom_point() +
     facet_wrap(~sex) +
     stat_stl(frequency = 12, s.window = 7) +
     ggtitle("Seasonally adjusted lung deaths")
+ )
+  
+  #=====================seas=============
+  print(
+     ggplot(ap_df, aes(x = x, y = y)) +
+        stat_seas(start = c(1949, 1), frequency = 12)
+  )
+  
+  print(
+     ggplot(ap_df, aes(x = x, y = y)) +
+        stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL))
+  )
+  
+  print(
+     ggplot(ap_df, aes(x = x, y = y)) +
+        stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL),
+                  index.ref = 1, index.basis = 1000) +
+        labs(y = "Seasonally adjusted index\n(first observation = 1000)")
+  )
   
   
   
-  #============ordering================
+    
+  #============ordering shouldn't matter================
   ldeaths_sorted <- ldeaths_df[order(ldeaths_df$deaths), ]
   
+  print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
-       stat_decomp(frequency = 12)
+     stat_decomp(frequency = 12) +
+     stat_rollapplyr(width = 12, linetype = 2)
+  )
   
+  print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
      stat_seas(frequency = 12, start = c(1949, 1))
+  )
   
+  print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
      stat_stl(frequency = 12, s.window = 7)
-  
+  )
   
   #===================ggsdc===============
   
