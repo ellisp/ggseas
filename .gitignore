@@ -29,5 +29,7 @@ fort.6
 # test crap trying to get pdf to work
 examples/test.*
 
-# builds
+
+# builds and examples
 *.tar.gz
+*.pdf
