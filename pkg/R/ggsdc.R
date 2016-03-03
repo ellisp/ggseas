@@ -2,13 +2,22 @@
 
 #' @import stats
 ggsdc_helper <- function(data, mapping, frequency, method, start, s.window, 
-                         type = c("additive", "multiplicative")){
-   data <- data[order(data[ , as.character(mapping$x)]), ]
+                         type = c("additive", "multiplicative"),
+                         index.ref, index.basis){
    
+   yvar <- as.character(mapping$y)
+   xvar <- as.character(mapping$x)
+   
+   data <- data[order(data[ , xvar]), ]
+   
+   if(!is.null(index.ref)){
+      data[ , yvar] <- index_help(data[ , yvar], ref = index.ref, 
+                           basis = index.basis)
+   }
    
    if(method == "decompose"){
       type <- match.arg(type)
-      y <- ts(data[ , as.character(mapping$y)], frequency = frequency)
+      y <- ts(data[ , yvar], frequency = frequency)
       model <- decompose(y, type = type)
       y2 <- as.numeric(model$trend)
       y3 <- as.numeric(model$seasonal)
@@ -19,7 +28,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
       if(is.null(s.window)){
          stop("A value is needed for s.window.  See ?stl for help.")
       }
-      y <- ts(data[ , as.character(mapping$y)], frequency = frequency)
+      y <- ts(data[ , yvar], frequency = frequency)
       model <- stl(y, s.window = s.window)
       y2 <- as.numeric(model$time.series[ , 2])
       y3 <- as.numeric(model$time.series[ , 1])
@@ -27,7 +36,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
    }
    
    if(method == "seas"){
-      y <- ts(data[ , as.character(mapping$y)], frequency = frequency, start = start)
+      y <- ts(data[ , yvar], frequency = frequency, start = start)
       model <- seas(y)
       d <- as.data.frame(model$data)
       y2 <- d$trend
@@ -38,27 +47,25 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
    }
    
    sdc <- rbind(
-      data.frame(x = data[ , as.character(mapping$x)],
+      data.frame(x = data[ , xvar],
                  y = as.numeric(y),
                  component = factor("observed", 
                                     levels = c("observed", "trend", "seasonal", "irregular")))  ,
-      data.frame(x = data[ , as.character(mapping$x)],
+      data.frame(x = data[ , xvar],
                  y = y2,
                  component = "trend",
                  stringsAsFactors = FALSE),
-      data.frame(x = data[ , as.character(mapping$x)],
+      data.frame(x = data[ , xvar],
                  y = y3,
                  component = "seasonal",
                  stringsAsFactors = FALSE),
-      data.frame(x = data[ , as.character(mapping$x)],
+      data.frame(x = data[ , xvar],
                  y = y4,
                  component = "irregular",
                  stringsAsFactors = FALSE)
    )
    
    return(sdc)
-   
- 
    
 }
 
@@ -118,6 +125,11 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #'       method = "seas", start = c(1971, 2), frequency = 4) +
 #'    geom_line()
 #' }
+#' 
+#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12,
+#'    index.ref = 1:12, index.basis = 1000) +
+#'    geom_line() +
+#'    ylab("Lung deaths index (average month in 1974 = 1000)")
 #'       
 #' bop <- subset(nzbop, Account == "Current account" & !Balance)
 #' ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
@@ -128,7 +140,8 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #'       geom_line() 
 ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas"),
                   start, s.window, 
-                  type = c("additive", "multiplicative")) {
+                  type = c("additive", "multiplicative"),
+                  index.ref = NULL, index.basis = 100) {
 
    if(is.null(frequency)){
       stop("frequency is needed")
@@ -152,7 +165,8 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
       all_cols <- unique(cv)
       for(this_col in all_cols){
          this_data <- data[cv == this_col, ]
-         this_sdc <- ggsdc_helper(this_data, mapping, frequency, method, start, s.window, type)
+         this_sdc <- ggsdc_helper(this_data, mapping, frequency, method, start, s.window, type,
+                                  index.ref, index.basis)
          this_sdc$colour <- this_col
       
          if(exists("sdc")){
@@ -170,7 +184,8 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
       
    } else {
       # Univariate
-      sdc <- ggsdc_helper(data, mapping, frequency, method, start, s.window, type)
+      sdc <- ggsdc_helper(data, mapping, frequency, method, start, s.window, type,
+                          index.ref, index.basis)
       
       p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
          facet_wrap(~component, ncol = 1, scales = "free_y") 

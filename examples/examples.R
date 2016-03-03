@@ -160,7 +160,16 @@ print(
   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12) +
      geom_line()
   )
+ 
+  print(
+     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12,
+           index.ref = 1:12, index.basis = 1000) +
+        geom_line() +
+        ylab("Lung deaths index (average month in 1974 = 1000)")
+  )
   
+  
+   
   print(
   ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
         frequency = 12, start = c(1949, 1)) +

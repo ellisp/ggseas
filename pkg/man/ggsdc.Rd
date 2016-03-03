@@ -5,7 +5,8 @@
 \title{Visualise seasonal decomposition}
 \usage{
 ggsdc(data, mapping, frequency, method = c("stl", "decompose", "seas"), start,
-  s.window, type = c("additive", "multiplicative"))
+  s.window, type = c("additive", "multiplicative"), index.ref = NULL,
+  index.basis = 100)
 }
 \arguments{
 \item{data}{dataset to use for plot.}
@@ -70,6 +71,11 @@ ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
       method = "seas", start = c(1971, 2), frequency = 4) +
    geom_line()
 }
+
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12,
+   index.ref = 1:12, index.basis = 1000) +
+   geom_line() +
+   ylab("Lung deaths index (average month in 1974 = 1000)")
       
 bop <- subset(nzbop, Account == "Current account" & !Balance)
 ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, 
