@@ -142,6 +142,7 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas",
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-3.png)
 
 ```r
+library(scales) # for label= comma
 serv <- subset(nzbop, Account == "Current account" & 
                   Category %in% c("Services; Exports total", "Services; Imports total"))
 

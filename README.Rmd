@@ -99,6 +99,7 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas",
       frequency = 12, start = c(1949, 1)) +
       geom_line()
 
+library(scales) # for label= comma
 serv <- subset(nzbop, Account == "Current account" & 
                   Category %in% c("Services; Exports total", "Services; Imports total"))
 
