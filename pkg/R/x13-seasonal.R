@@ -4,9 +4,14 @@
 StatSeas <- ggproto("StatSeas", Stat, 
                   required_aes = c("x", "y"),
                   
-                  compute_group = function(data, scales, frequency, start, x13_params, 
+                  compute_group = function(data, scales, x13_params, 
                                            index.ref, index.basis, ...) {
                      data <- data[order(data$x), ]
+
+                     # Why not getting this from x?
+                     start <- data$x[1]
+                     frequency <- unique(round(1 / diff(data$x)))
+
                      y_ts <- ts(data$y, frequency = frequency, start = start)
                      y_sa <- seasonal::final(seasonal::seas(y_ts, list = x13_params))
                      result <- data.frame(x = data$x, y = as.numeric(y_sa))
@@ -69,12 +74,12 @@ StatSeas <- ggproto("StatSeas", Stat,
 #'   }
 stat_seas <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", show.legend = NA, 
-                    inherit.aes = TRUE, start, frequency, x13_params = NULL, 
+                    inherit.aes = TRUE, x13_params = NULL, 
                     index.ref = NULL, index.basis = 100, ...) {
    ggplot2::layer(
       stat = StatSeas, data = data, mapping = mapping, geom = geom, 
       position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = list(frequency = frequency, start = start, x13_params = x13_params, 
+      params = list(x13_params = x13_params, 
                     na.rm = FALSE, index.ref = index.ref, index.basis = index.basis, ...)
       # note that this function is unforgiving of NAs.
    )
