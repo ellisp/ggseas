@@ -11,16 +11,22 @@ ggsdc_helper <- function(data, mapping, method, s.window,
    data <- data[order(data[ , xvar]), ]
    
    
-   if(class(data$x) == "Date" & (is.null(start) | is.null(frequency))){
-      stop("When x is of class 'Date' you need to specify start and frequency explicitly.")
+   if(class(data[ , xvar]) == "Date" & (is.null(frequency))){
+      stop("When x is of class 'Date' you need to specify frequency explicitly.")
    }
    
    if(is.null(start)){
-      start <- data$x[1]
+      start <- data[1, xvar]
+      if(method == "seas"){
+         if(class(data[ , xvar]) == "Date"){
+            stop("When x is of class 'Date' you need to specify start explicitly if method = 'seas'.")
+         }
+         message("Calculating starting date of ", start, " from the data.")
+      }
    }
    if(is.null(frequency)){
-      frequency <- unique(round(1 / diff(data$x)))   
-      message("Calculating frequency from the data.")
+      frequency <- unique(round(1 / diff(data[ , xvar])))   
+      message("Calculating frequency of ", frequency, " from the data.")
    }
    
    
@@ -201,7 +207,7 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
       
    } else {
       # Univariate
-      sdc <- ggsdc_helper(data = this_data, mapping = mapping, 
+      sdc <- ggsdc_helper(data = data, mapping = mapping, 
                           method = method, s.window = s.window, type = type,
                           index.ref = index.ref, index.basis = index.basis, 
                           frequency = frequency, start = start)

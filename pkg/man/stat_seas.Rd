@@ -86,8 +86,8 @@ ggplot(ap_df, aes(x = x, y = y)) +
   index.ref = 1, index.basis = 1000) +
   labs(y = "Seasonally adjusted index\\n(first observation = 1000)")
   
-# if the x value is not a decimal eg created with time(yourtsojbect)
-# you need to specify start and frequency by hand
+# if the x value is not a decimal eg not created with time(your_ts_object),
+# you need to specify start and frequency by hand:
 ggplot(filter(nzbop, Account == "Current account"), 
       aes(x = TimePeriod, y = Value)) +
    stat_seas(start = c(1971, 2), frequency = 12) +

@@ -100,6 +100,13 @@ print(
         labs(y = "Seasonally adjusted index\n(first observation = 1000)")
   )
   
+  print(
+     ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
+        geom_point() +
+        facet_wrap(~sex) +
+        stat_seas() +
+        ggtitle("Seasonally adjusted lung deaths")
+  )
   
   # if the x value is not a decimal eg not created with time(yourtsojbect)
   # you need to specify start and frequency by hand
@@ -138,44 +145,44 @@ print(
   #===================ggsdc===============
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
      geom_line()
   )
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", type = "multiplicative") +
      geom_line()
    )
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, type = "multiplicative") +
+  ggsdc(ap_df, aes(x = x, y = y), method = "decompose", type = "multiplicative") +
      geom_line(colour = "blue", size = 2) +
      theme_light(8)
   )
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+  ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
      labs(x = "", y = "Air passenger numbers") +
      geom_point()
   )
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = "periodic") +
+  ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = "periodic") +
      geom_line() + geom_point()
   )
   
   print(
-  ggsdc(ap_df, aes(x = x, y = y), method = "seas", frequency = 12, start = c(1949, 1)) +
+  ggsdc(ap_df, aes(x = x, y = y), method = "seas") +
      geom_line()
   )
   
   print(
-  ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12) +
+  ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7) +
      geom_line()
   )
  
   print(
-     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12,
+     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7,
            index.ref = 1:12, index.basis = 1000) +
         geom_line() +
         ylab("Lung deaths index (average month in 1974 = 1000)")
@@ -184,27 +191,32 @@ print(
   
    
   print(
-  ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
-        frequency = 12, start = c(1949, 1)) +
+  ggsdc(filter(ldeaths_df, YearMon > 1974.4), aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
      geom_line()
   )
   
+  # 
+  # 
+  #  x <- ts(filter(ldeaths_df, sex == "female", YearMon > 1974)$deaths, 
+  #         start = round(ldeaths_df[2, "YearMon"], 3), frequency = 12)
+  # 
+  # seas(x)
+  # 
   # does it work with factors:
   ldeaths_df$sex <- as.factor(ldeaths_df$sex)
   print(
-     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", frequency = 12) +
+     ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose") +
      geom_line()
   )
   
   print(
    ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "decompose", 
-      frequency = 12, type = "multiplicative") +
+      type = "multiplicative") +
    geom_line()
 )
 
   print(
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
-      frequency = 12, start = c(1949, 1)) +
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
    geom_line()
   )
   
@@ -216,7 +228,7 @@ detach("package:mbieDBmisc", unload = TRUE)
 detach("package:mbie", unload = TRUE)
 
 print(
-ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), frequency = 4, s.window = 7) +
+ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), s.window = 7, frequency = 4) +
    geom_line()
 )
 

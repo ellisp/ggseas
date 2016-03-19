@@ -8,13 +8,26 @@ StatSeas <- ggproto("StatSeas", Stat,
                                            index.ref, index.basis, start, frequency, ...) {
                      data <- data[order(data$x), ]
 
+                     if(class(data$x) == "Date" & (is.null(frequency))){
+                        stop("When x is of class 'Date' you need to specify frequency explicitly.")
+                     }
+                     
                      if(is.null(start)){
-                        start <- data$x[1]
+                        start <- data[1, "x"]
+                           if(class(data$x) == "Date"){
+                              stop("When x is of class 'Date' you need to specify start explicitly.")
+                           }
+                           message("Calculating starting date of ", start, " from the data.")
+                        
                      }
                      if(is.null(frequency)){
-                        frequency <- unique(round(1 / diff(data$x)))
-                        message("Calculating frequency from the data.")
+                        frequency <- unique(round(1 / diff(data$x)))   
+                        if(length(frequency) != 1){
+                           stop("Unable to calculate frequency from the data.")
+                        }
+                        message("Calculating frequency of ", frequency, " from the data.")
                      }
+                     
                      
                      y_ts <- ts(data$y, frequency = frequency, start = start)
                      y_sa <- seasonal::final(seasonal::seas(y_ts, list = x13_params))
