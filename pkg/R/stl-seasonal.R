@@ -4,6 +4,20 @@ StatSTL <- ggproto("StatSTL", Stat,
                       compute_group = function(data, scales, frequency, s.window, 
                                                index.ref, index.basis, ...) {
                          data <- data[order(data$x), ]
+                         
+                         if(class(data$x) == "Date" & (is.null(frequency))){
+                            stop("When x is of class 'Date' you need to specify frequency explicitly.")
+                         }
+                         
+                         if(is.null(frequency)){
+                            frequency <- unique(round(1 / diff(data$x)))   
+                            if(length(frequency) != 1){
+                               stop("Unable to calculate frequency from the data.")
+                            }
+                            message("Calculating frequency of ", frequency, " from the data.")
+                         }
+                         
+                         
                          y_ts <- ts(data$y, frequency = frequency)
                          y_stl <- stl(y_ts, s.window = s.window)
                          y_sa <- with(as.data.frame(y_stl$time.series), trend + remainder)
@@ -44,26 +58,26 @@ StatSTL <- ggproto("StatSTL", Stat,
 #' 
 #' # periodic if fixed seasonality; doesn't work well:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_stl(frequency = 12, s.window = "periodic")
+#'    stat_stl(s.window = "periodic")
 #' 
 #' # seasonality varies a bit over time, works better:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_stl(frequency = 12, s.window = 7)
+#'    stat_stl(s.window = 7)
 #' 
 #' # Multiple time series example:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'    geom_point() +
 #'    facet_wrap(~sex) +
-#'    stat_stl(frequency = 12, s.window = 7) +
+#'    stat_stl(s.window = 7) +
 #'    ggtitle("Seasonally adjusted lung deaths")
 #'
 #' # Index so first value is 100:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_stl(frequency = 12, s.window = 7, index.ref = 1)
+#'    stat_stl(s.window = 7, index.ref = 1)
 
 stat_stl <- function(mapping = NULL, data = NULL, geom = "line",
                      position = "identity", show.legend = NA, 
-                     inherit.aes = TRUE, frequency, s.window, 
+                     inherit.aes = TRUE, frequency = NULL, s.window, 
                      index.ref = NULL, index.basis = 100, ...) {
    ggplot2::layer(
       stat = StatSTL, data = data, mapping = mapping, geom = geom, 

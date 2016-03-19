@@ -59,12 +59,12 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 # periodic if fixed seasonality; doesn't work well:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_stl(frequency = 12, s.window = "periodic")
+   stat_stl(s.window = "periodic")
 
 # seasonality varies a bit over time, works better:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_stl(frequency = 12, s.window = 7)
+   stat_stl(s.window = 7)
 ```
 
 ### Classical decomposition
@@ -72,12 +72,12 @@ ggplot(ap_df, aes(x = x, y = y)) +
 # default additive decomposition (doesn't work well in this case!):
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_decomp(frequency = 12)
+   stat_decomp()
 
 # multiplicative decomposition, more appropriate:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_decomp(frequency = 12, type = "multiplicative")
+   stat_decomp(type = "multiplicative")
 ```
 
 ## Usage - seasonal decomposition on the fly
@@ -87,16 +87,15 @@ as allowing ggplot2 look and feel of plots, you can also map a variable to the
 colour (or color) aesthetic, to allow two difference decompositions on the same
 graphic.
 ```{r}
-ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
    geom_line()
 
 
-ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
    labs(x = "", y = "Air passenger numbers") +
    geom_point()
 
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
-      frequency = 12, start = c(1949, 1)) +
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
       geom_line()
 
 library(scales) # for label= comma

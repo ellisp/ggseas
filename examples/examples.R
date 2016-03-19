@@ -32,19 +32,19 @@ print(
  # default additive decomposition (doesn't work well in this case!):
  print(
     ggplot(ap_df, aes(x = x, y = y)) +
-     stat_decomp(frequency = 12)
- )
+     stat_decomp() 
+    )
  
  # multiplicative decomposition, more appropriate:
  print(
  ggplot(ap_df, aes(x = x, y = y)) +
-    stat_decomp(frequency = 12, type = "multiplicative")
+    stat_decomp(type = "multiplicative")
  )
  
  # multiplicative decomposition with index
  print(
  ggplot(ap_df, aes(x = x, y = y)) +
-    stat_decomp(frequency = 12, type = "multiplicative", 
+    stat_decomp(type = "multiplicative", 
                 index.ref = 1:12, index.basis = 1000) +
     labs(y = "Seasonally adjusted, index\n(first 12 months average = 1000")
  )
@@ -52,7 +52,7 @@ print(
 
  print(
   ggplot(ldeaths_df, aes(x = YearMon, y = deaths, color = sex)) +
-    stat_decomp(frequency = 12, index.ref = 1) +
+    stat_decomp(index.ref = 1) +
      labs(y = "Deaths index (Jan 1974 = 100)")
  )
   
@@ -60,25 +60,24 @@ print(
   # periodic if fixed seasonality; doesn't work well:
  print( 
  ggplot(ap_df, aes(x = x, y = y)) +
-     stat_stl(frequency = 12, s.window = "periodic")
-  
- )
+     stat_stl(s.window = "periodic")
+  )
   # seasonality varies a bit over time, works better:
  print( 
  ggplot(ap_df, aes(x = x, y = y)) +
-     stat_stl(frequency = 12, s.window = 7)
+     stat_stl(s.window = 7)
  )
  
  print(
   ggplot(ap_df, aes(x = x, y = y)) +
-     stat_stl(frequency = 12, s.window = 7, index.ref = 1)
+     stat_stl(s.window = 7, index.ref = 1)
  )
  
  print(
   ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
     geom_point() +
     facet_wrap(~sex) +
-    stat_stl(frequency = 12, s.window = 7) +
+    stat_stl(s.window = 7) +
     ggtitle("Seasonally adjusted lung deaths")
  )
   
@@ -110,18 +109,20 @@ print(
   
   # if the x value is not a decimal eg not created with time(yourtsojbect)
   # you need to specify start and frequency by hand
-  ggplot(filter(nzbop, Account == "Current account"), 
+  print(
+     ggplot(filter(nzbop, Account == "Current account"), 
         aes(x = TimePeriod, y = Value)) +
     stat_seas(start = c(1971, 2), frequency = 12) +
     facet_wrap(~Category, scales = "free_y")
-  
+  )
     
   #============ordering shouldn't matter================
-  ldeaths_sorted <- ldeaths_df[order(ldeaths_df$deaths), ]
+  ldeaths_sorted <- ldeaths_df[order(ldeaths_df$deaths), ] %>%
+     filter(YearMon > 1974.3)
   
   print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
-     stat_decomp(frequency = 12) +
+     stat_decomp() +
      stat_rollapplyr(width = 12, linetype = 2)
   )
   
@@ -132,7 +133,7 @@ print(
   
   print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
-     stat_stl(frequency = 12, s.window = 7)
+     stat_stl(s.window = 7)
   )
   
   #============stat_index============
@@ -148,7 +149,13 @@ print(
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
      geom_line()
   )
-  
+
+  print(
+     ggsdc(ldeaths_sorted, aes(x = YearMon, y = deaths, color = sex), 
+           method = "decompose") +
+        geom_line()
+  )
+
   print(
   ggsdc(ap_df, aes(x = x, y = y), method = "decompose", type = "multiplicative") +
      geom_line()

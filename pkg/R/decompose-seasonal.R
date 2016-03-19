@@ -7,6 +7,21 @@ StatDecomp <- ggproto("StatDecomp", Stat,
                     compute_group = function(data, scales, frequency, type, 
                                              index.ref, index.basis, ...) {
                        data <- data[order(data$x), ]
+                       
+                       if(class(data$x) == "Date" & (is.null(frequency))){
+                          stop("When x is of class 'Date' you need to specify frequency explicitly.")
+                       }
+                       
+                       if(is.null(frequency)){
+                          frequency <- unique(round(1 / diff(data$x)))   
+                          if(length(frequency) != 1){
+                             stop("Unable to calculate frequency from the data.")
+                          }
+                          message("Calculating frequency of ", frequency, " from the data.")
+                       }
+                       
+                       
+                       
                        y_ts <- ts(data$y, frequency = frequency)
                        y_dc <- decompose(y_ts, type = type)
                        if(type == "additive"){
@@ -55,28 +70,28 @@ StatDecomp <- ggproto("StatDecomp", Stat,
 #' 
 #' # Default additive decomposition (doesn't work well in this case!):
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_decomp(frequency = 12)
+#'    stat_decomp()
 #' 
 #' # Multiplicative decomposition, more appropriate:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_decomp(frequency = 12, type = "multiplicative")
+#'    stat_decomp(type = "multiplicative")
 #' 
 #' # Multiple time series example:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   geom_point() +
 #'   facet_wrap(~sex) +
-#'   stat_decomp(frequency = 12) +
+#'   stat_decomp() +
 #'   ggtitle("Seasonally adjusted lung deaths")
 #'
 #' # Example using index:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   facet_wrap(~sex) +
-#'   stat_rollapplyr(width = 12, align = "center", index.ref = 1:12, index.basis = 1000) +
+#'   stat_decomp(index.ref = 1:12, index.basis = 1000) +
 #'   ggtitle("Rolling annual median lung deaths, indexed (average month in 1974 = 1000)")
 #'
 stat_decomp <- function(mapping = NULL, data = NULL, geom = "line",
                       position = "identity", show.legend = NA, 
-                      inherit.aes = TRUE, frequency, type = c("additive", "multiplicative"), 
+                      inherit.aes = TRUE, frequency = NULL, type = c("additive", "multiplicative"), 
                       index.ref = NULL, index.basis = 100, ...) {
    type <- match.arg(type)
    ggplot2::layer(
