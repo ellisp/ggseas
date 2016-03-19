@@ -5,12 +5,17 @@ StatSeas <- ggproto("StatSeas", Stat,
                   required_aes = c("x", "y"),
                   
                   compute_group = function(data, scales, x13_params, 
-                                           index.ref, index.basis, ...) {
+                                           index.ref, index.basis, start, frequency, ...) {
                      data <- data[order(data$x), ]
 
-                     start <- data$x[1]
-                     frequency <- unique(round(1 / diff(data$x)))
-
+                     if(is.null(start)){
+                        start <- data$x[1]
+                     }
+                     if(is.null(frequency)){
+                        frequency <- unique(round(1 / diff(data$x)))
+                        message("Calculating frequency from the data.")
+                     }
+                     
                      y_ts <- ts(data$y, frequency = frequency, start = start)
                      y_sa <- seasonal::final(seasonal::seas(y_ts, list = x13_params))
                      result <- data.frame(x = data$x, y = as.numeric(y_sa))
@@ -70,21 +75,27 @@ StatSeas <- ggproto("StatSeas", Stat,
 #'   stat_seas(x13_params = list(x11 = "", outlier = NULL),
 #'   index.ref = 1, index.basis = 1000) +
 #'   labs(y = "Seasonally adjusted index\n(first observation = 1000)")
+#'   
+#' # if the x value is not a decimal eg not created with time(your_ts_object),
+#' # you need to specify start and frequency by hand:
+#' ggplot(filter(nzbop, Account == "Current account"), 
+#'       aes(x = TimePeriod, y = Value)) +
+#'    stat_seas(start = c(1971, 2), frequency = 12) +
+#'    facet_wrap(~Category, scales = "free_y")
+#'   
 #'   }
 stat_seas <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", show.legend = NA, 
                     inherit.aes = TRUE, x13_params = NULL, 
                     index.ref = NULL, index.basis = 100, 
                     frequency = NULL, start = NULL, ...) {
-   if(!is.null(frequency) | !is.null(start)){
-      warning("From ggseas version 0.3.1, frequency and start are calculated from
-              the data.  The values you've provided are ignored.")
-   }
+   
    ggplot2::layer(
       stat = StatSeas, data = data, mapping = mapping, geom = geom, 
       position = position, show.legend = show.legend, inherit.aes = inherit.aes,
       params = list(x13_params = x13_params, 
-                    na.rm = FALSE, index.ref = index.ref, index.basis = index.basis, ...)
+                    na.rm = FALSE, index.ref = index.ref, index.basis = index.basis, 
+                    start = start, frequency = frequency, ...)
       # note that this function is unforgiving of NAs.
    )
 }

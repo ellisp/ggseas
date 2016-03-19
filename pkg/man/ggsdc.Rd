@@ -55,27 +55,26 @@ on the scale of the original data), depending on the settings.
 # sample time series data in data frame
 ap_df <- tsdf(AirPassengers)
 
-ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
    geom_line()
    
-ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, 
+ggsdc(ap_df, aes(x = x, y = y), method = "decompose", 
       type = "multiplicative") +
    geom_line(colour = "blue", size = 2) +
    theme_light(8)
 
-ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
    labs(x = "", y = "Air passenger numbers") +
    geom_point()
    
 \dontrun{      
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
-      frequency = 12, start = c(1949, 1)) +
+ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
       geom_line()
       
 serv <- subset(nzbop, Account == "Current account" & 
             Category \%in\% c("Services; Exports total", "Services; Imports total"))
 ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
-      method = "seas", start = c(1971, 2), frequency = 4) +
+      method = "seas") +
    geom_line()
 }
 

@@ -1,14 +1,29 @@
 
 
 #' @import stats
-ggsdc_helper <- function(data, mapping, frequency, method, start, s.window, 
+ggsdc_helper <- function(data, mapping, method, s.window, 
                          type = c("additive", "multiplicative"),
-                         index.ref, index.basis){
+                         index.ref, index.basis, start, frequency){
    
    yvar <- as.character(mapping$y)
    xvar <- as.character(mapping$x)
    
    data <- data[order(data[ , xvar]), ]
+   
+   
+   if(class(data$x) == "Date" & (is.null(start) | is.null(frequency))){
+      stop("When x is of class 'Date' you need to specify start and frequency explicitly.")
+   }
+   
+   if(is.null(start)){
+      start <- data$x[1]
+   }
+   if(is.null(frequency)){
+      frequency <- unique(round(1 / diff(data$x)))   
+      message("Calculating frequency from the data.")
+   }
+   
+   
    
    if(!is.null(index.ref)){
       data[ , yvar] <- index_help(data[ , yvar], ref = index.ref, 
@@ -107,21 +122,20 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #' # sample time series data in data frame
 #' ap_df <- tsdf(AirPassengers)
 #' 
-#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12) +
+#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
 #'    geom_line()
 #'    
-#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", frequency = 12, 
+#' ggsdc(ap_df, aes(x = x, y = y), method = "decompose", 
 #'       type = "multiplicative") +
 #'    geom_line(colour = "blue", size = 2) +
 #'    theme_light(8)
 #' 
-#' ggsdc(ap_df, aes(x = x, y = y), method = "stl", frequency = 12, s.window = 7) +
+#' ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
 #'    labs(x = "", y = "Air passenger numbers") +
 #'    geom_point()
 #'    
 #' \dontrun{      
-#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas", 
-#'       frequency = 12, start = c(1949, 1)) +
+#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
 #'       geom_line()
 #'       
 #' serv <- subset(nzbop, Account == "Current account" & 
@@ -131,7 +145,7 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #'    geom_line()
 #' }
 #' 
-#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, frequency = 12,
+#' ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), s.window = 7, 
 #'    index.ref = 1:12, index.basis = 1000) +
 #'    geom_line() +
 #'    ylab("Lung deaths index (average month in 1974 = 1000)")
@@ -143,15 +157,11 @@ ggsdc_helper <- function(data, mapping, frequency, method, start, s.window,
 #'       
 #' ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
 #'       geom_line() 
-ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas"),
-                  start, s.window, 
+ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose", "seas"),
+                  start = NULL, s.window, 
                   type = c("additive", "multiplicative"),
                   index.ref = NULL, index.basis = 100) {
 
-   if(is.null(frequency)){
-      stop("frequency is needed")
-   }
-   
    method <- match.arg(method)
    
    # Australian/British spelling please:
@@ -170,8 +180,10 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
       all_cols <- unique(cv)
       for(this_col in all_cols){
          this_data <- data[cv == this_col, ]
-         this_sdc <- ggsdc_helper(this_data, mapping, frequency, method, start, s.window, type,
-                                  index.ref, index.basis)
+         this_sdc <- ggsdc_helper(data = this_data, mapping = mapping, 
+                                  method = method, s.window = s.window, type = type,
+                                  index.ref = index.ref, index.basis = index.basis, 
+                                  frequency = frequency, start = start)
          this_sdc$colour <- this_col
       
          if(exists("sdc")){
@@ -189,8 +201,10 @@ ggsdc <- function(data, mapping, frequency, method = c("stl", "decompose", "seas
       
    } else {
       # Univariate
-      sdc <- ggsdc_helper(data, mapping, frequency, method, start, s.window, type,
-                          index.ref, index.basis)
+      sdc <- ggsdc_helper(data = this_data, mapping = mapping, 
+                          method = method, s.window = s.window, type = type,
+                          index.ref = index.ref, index.basis = index.basis, 
+                          frequency = frequency, start = start)
       
       p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
          facet_wrap(~component, ncol = 1, scales = "free_y") 
