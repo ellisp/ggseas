@@ -8,7 +8,6 @@ StatSeas <- ggproto("StatSeas", Stat,
                                            index.ref, index.basis, ...) {
                      data <- data[order(data$x), ]
 
-                     # Why not getting this from x?
                      start <- data$x[1]
                      frequency <- unique(round(1 / diff(data$x)))
 
@@ -53,29 +52,34 @@ StatSeas <- ggproto("StatSeas", Stat,
 #' 
 #' # SEATS with defaults:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'    stat_seas(start = c(1949, 1), frequency = 12)
+#'    stat_seas()
 #'    
 #' # X11 with no outlier treatment:
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'   stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL))
+#'   stat_seas(x13_params = list(x11 = "", outlier = NULL))
 #'
 #' # Multiple time series example:    
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   geom_point() +
 #'   facet_wrap(~sex) +
-#'   stat_seas(start = c(1974, 1), frequency = 12) +
+#'   stat_seas() +
 #'   ggtitle("Seasonally adjusted lung deaths")
 #'   
 #' # example use of index:  
 #' ggplot(ap_df, aes(x = x, y = y)) +
-#'   stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL),
+#'   stat_seas(x13_params = list(x11 = "", outlier = NULL),
 #'   index.ref = 1, index.basis = 1000) +
 #'   labs(y = "Seasonally adjusted index\n(first observation = 1000)")
 #'   }
 stat_seas <- function(mapping = NULL, data = NULL, geom = "line",
                     position = "identity", show.legend = NA, 
                     inherit.aes = TRUE, x13_params = NULL, 
-                    index.ref = NULL, index.basis = 100, ...) {
+                    index.ref = NULL, index.basis = 100, 
+                    frequency = NULL, start = NULL, ...) {
+   if(!is.null(frequency) | !is.null(start)){
+      warning("From ggseas version 0.3.1, frequency and start are calculated from
+              the data.  The values you've provided are ignored.")
+   }
    ggplot2::layer(
       stat = StatSeas, data = data, mapping = mapping, geom = geom, 
       position = position, show.legend = show.legend, inherit.aes = inherit.aes,

@@ -32,14 +32,14 @@ ap_df <- tsdf(AirPassengers)
 # SEATS with defaults
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_seas(start = c(1949, 1), frequency = 12) +
+   stat_seas() +
    ggtitle("SEATS seasonal adjustment - international airline passengers") +
    ylab("International airline passengers per month")
 
 # X11 with no outlier treatment
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
-   stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL)) +
+   stat_seas(x13_params = list(x11 = "", outlier = NULL)) +
    ggtitle("X11 seasonal adjustment - international airline passengers") +
    ylab("International airline passengers per month")
 
@@ -47,7 +47,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
    geom_point(colour = "grey50") +
    geom_line(colour = "grey50") +
    facet_wrap(~sex) +
-   stat_seas(start = c(1974, 1), frequency = 12, size = 2) +
+   stat_seas(size = 2) +
    ggtitle("Seasonally adjusted lung deaths in the UK 1974 - 1979") +
    ylab("Deaths") +
    xlab("(light grey shows original data;\ncoloured line is seasonally adjusted)") +

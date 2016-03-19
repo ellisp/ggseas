@@ -1,7 +1,10 @@
 Package: ggseas
 Title: 'stats' for Seasonal Adjustment on the Fly with 'ggplot2'
-Version: 0.3.0
-Author: Peter Ellis <peter.ellis2013nz@gmail.com>
+Version: 0.3.1
+Authors@R: c(
+   person("Peter", "Ellis", , "peter.ellis2013nz@gmail.com", c("aut", "cre")),
+   person("Christophe", "Sax", role = "ctb")
+   )
 Maintainer: Peter Ellis <peter.ellis2013nz@gmail.com>
 Description: Provides 'ggplot2' 'stats' that estimate seasonally adjusted series 
     and rolling summaries such as rolling average on the fly for time series.

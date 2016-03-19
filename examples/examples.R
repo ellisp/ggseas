@@ -85,17 +85,17 @@ print(
   #=====================seas=============
   print(
      ggplot(ap_df, aes(x = x, y = y)) +
-        stat_seas(start = c(1949, 1), frequency = 12)
+        stat_seas()
   )
   
   print(
      ggplot(ap_df, aes(x = x, y = y)) +
-        stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL))
+        stat_seas(x13_params = list(x11 = "", outlier = NULL))
   )
   
   print(
      ggplot(ap_df, aes(x = x, y = y)) +
-        stat_seas(start = c(1949, 1), frequency = 12, x13_params = list(x11 = "", outlier = NULL),
+        stat_seas(x13_params = list(x11 = "", outlier = NULL),
                   index.ref = 1, index.basis = 1000) +
         labs(y = "Seasonally adjusted index\n(first observation = 1000)")
   )
@@ -114,7 +114,7 @@ print(
   
   print(
   ggplot(ldeaths_sorted, aes(x = YearMon, y = deaths, colour = sex)) +
-     stat_seas(frequency = 12, start = c(1949, 1))
+     stat_seas()
   )
   
   print(
