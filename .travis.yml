@@ -3,7 +3,11 @@
 # this is the only line that needed changing from olmjo's
 sudo: required
 
-language: R
+language: r
+r:
+  - oldrel
+  - release
+  - devel
 
 cache: packages
 
