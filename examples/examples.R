@@ -1,4 +1,5 @@
 library(Cairo)
+library(dplyr)
 CairoPDF("examples/examples.pdf", 11, 8)
 
 ap_df <- tsdf(AirPassengers)
