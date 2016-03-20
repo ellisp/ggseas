@@ -1,5 +1,5 @@
 library(knitr)
-knit("README.Rmd", "README.md")
+# knit("README.Rmd", "README.md")
 
 library(devtools)
 document("pkg")

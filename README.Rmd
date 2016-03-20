@@ -5,6 +5,8 @@ Convenience functions that let you easily do seasonal adjustment on the fly with
 
 Depends on the [`seasonal` package](https://cran.r-project.org/web/packages/seasonal/index.html) to give you access to X13-SEATS-ARIMA.
 
+[![Travis-CI Build Status](https://travis-ci.org/ellisp/ggseas.svg?branch=master)](https://travis-ci.org/ellisp/ggseas)
+
 ## Installation
 Install the stable version the usual way from CRAN:
 
