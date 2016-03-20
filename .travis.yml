@@ -1,5 +1,6 @@
 # copied from https://github.com/olmjo/RcppTN/blob/master/.travis.yml 
 
+# this is the only line that needed changing from olmjo's
 sudo: required
 
 language: R
