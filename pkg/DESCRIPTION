@@ -14,7 +14,8 @@ Depends:
     ggplot2 (>= 2.0.0), 
     stats, 
     zoo,
-    devtools
+    devtools,
+    testthat
 License: GPL-3
 LazyData: true
 RoxygenNote: 5.0.1
