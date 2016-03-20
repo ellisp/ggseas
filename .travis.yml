@@ -8,3 +8,4 @@ r:
 warnings_are_errors: true
 sudo: required
 cache: packages
+script: build.R
