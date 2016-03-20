@@ -5,7 +5,7 @@ library(devtools)
 document("pkg")
 test("pkg")
 build("pkg")
-source("examples/examples.R")
+# source("examples/examples.R")
 
 
 
