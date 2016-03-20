@@ -3,6 +3,7 @@
 
 ## 0.4.0
 * Seasonal adjustment functions will estimate frequency and (for X13 related purposes) start from the data if possible.  If the x variable is a Date rather than numeric, user still needs to provide start and frequency.
+* testthat unit tests added
 
 
 ## 0.3.0 (current CRAN version)
