@@ -1,5 +1,7 @@
 # copied from https://github.com/olmjo/RcppTN/blob/master/.travis.yml 
 
+sudo: required
+
 language: R
 
 before_install:
