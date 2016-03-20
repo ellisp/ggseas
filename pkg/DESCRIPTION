@@ -13,9 +13,7 @@ Depends:
     seasonal, 
     ggplot2 (>= 2.0.0), 
     stats, 
-    zoo,
-    devtools,
-    testthat
+    zoo
 License: GPL-3
 LazyData: true
 RoxygenNote: 5.0.1
