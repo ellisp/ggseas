@@ -8,4 +8,5 @@ r:
 warnings_are_errors: false
 sudo: required
 cache: packages
-script: build.R
+install: 
+   - cd ./pkg
