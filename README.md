@@ -6,6 +6,9 @@ Convenience functions that let you easily do seasonal adjustment on the fly with
 Depends on the [`seasonal` package](https://cran.r-project.org/web/packages/seasonal/index.html) to give you access to X13-SEATS-ARIMA.
 
 [![Travis-CI Build Status](https://travis-ci.org/ellisp/ggseas.svg?branch=master)](https://travis-ci.org/ellisp/ggseas)
+[![CRAN version](http://www.r-pkg.org/badges/version/ggseas)](http://www.r-pkg.org/pkg/ggseas)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/ggseas)](http://www.r-pkg.org/pkg/ggseas)
+
 
 ## Installation
 Install the stable version the usual way from CRAN:
@@ -31,6 +34,32 @@ into a usual ggplot() command, substituting for where you'd normally have geom_l
 
 ```r
 library(ggseas)
+```
+
+```
+## Loading required package: seasonal
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```
+## Loading required package: zoo
+```
+
+```
+## 
+## Attaching package: 'zoo'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+```
+
+```r
 # make demo data with the convenience "time series to data.frame" function tsdf()
 ap_df <- tsdf(AirPassengers)
 
