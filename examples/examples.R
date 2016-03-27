@@ -229,23 +229,6 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
   )
   
 
-library(mbieDBmisc)
-TRED <- odbcConnect("TRED_Prod")
-tmp <- ImportTS2(TRED, Dataset_ID = 1)
-detach("package:mbieDBmisc", unload = TRUE)
-detach("package:mbie", unload = TRUE)
-
-print(
-ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), s.window = 7, frequency = 4) +
-   geom_line()
-)
-
-print(
-ggsdc(tmp, aes(x = TimePeriod, y = Value, colour = CV1), frequency = 4, 
-      start = c(1987, 2), method = "seas") +
-   geom_line()
-)
-
 print(
 ggsdc(nzbop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.window = 7) +
    geom_line() +

@@ -27,3 +27,4 @@ fort.6
 # builds and examples
 *.tar.gz
 *.pdf
+ggseas.Rcheck/*
