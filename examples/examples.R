@@ -223,12 +223,6 @@ print(
    geom_line()
 )
 
-  print(
-     ldeaths_df %>%
-        mutate(sex = factor(sex, levels = c("male", "female"))) %>%
-   ggsdc(aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
-   geom_line()
-  )
   
 
 print(
@@ -289,6 +283,24 @@ print(
          method = "stl", s.window = 7, frequency = 4,
          facet.titles = c("The original series", "The underlying trend", "Regular seasonal patterns", "All the randomness left")) +
       geom_line()
+)
+
+
+#====================control colours in ggsdc==================
+
+print(
+ldeaths_df %>%
+   mutate(sex = factor(sex, levels = c("male", "female"))) %>%
+   ggsdc(aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
+   geom_line() +
+   ggtitle("Male should be higher than female in legend")
+)
+print(ldeaths_df %>%
+   mutate(sex = factor(sex, levels = c("female", "male"))) %>%
+   ggsdc(aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
+   geom_line() +
+   ggtitle("Female should be higher than malein legend")
+
 )
 
 
