@@ -8,7 +8,9 @@ document("pkg")
 test("pkg")
 check("pkg")
 build("pkg")
+
 source("examples/examples.R")
+source("examples/test-tibbles.R")
 
 
 
