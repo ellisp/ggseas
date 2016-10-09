@@ -173,6 +173,7 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
                   facet.titles = c("observed", "trend", "seasonal", "irregular")) {
 
    method <- match.arg(method)
+   data <- as.data.frame(data) # I hate tibbles
    
    # Australian/British spelling please:
    names(mapping)[names(mapping) == "color"] <- "colour"
@@ -186,7 +187,7 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
       }
       
       # make a convenient vector of the variable mapped to colour
-      cv <- as.character(data[ , colvar])
+      cv <- as.character(as.data.frame(data)[ , colvar])
       all_cols <- unique(cv)
       for(this_col in all_cols){
          this_data <- data[cv == this_col, ]

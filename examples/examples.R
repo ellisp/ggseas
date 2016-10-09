@@ -224,7 +224,9 @@ print(
 )
 
   print(
-ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
+     ldeaths_df %>%
+        mutate(sex = factor(sex, levels = c("male", "female"))) %>%
+   ggsdc(aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
    geom_line()
   )
   
