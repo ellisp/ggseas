@@ -3,7 +3,8 @@
 #' @import stats
 ggsdc_helper <- function(data, mapping, method, s.window, 
                          type = c("additive", "multiplicative"),
-                         index.ref, index.basis, start, frequency){
+                         index.ref, index.basis, start, frequency,
+                         facet.titles){
    
    yvar <- as.character(mapping$y)
    xvar <- as.character(mapping$x)
@@ -70,19 +71,19 @@ ggsdc_helper <- function(data, mapping, method, s.window,
    sdc <- rbind(
       data.frame(x = data[ , xvar],
                  y = as.numeric(y),
-                 component = factor("observed", 
-                                    levels = c("observed", "trend", "seasonal", "irregular")))  ,
+                 component = factor(facet.titles[1], 
+                                    levels = facet.titles))  ,
       data.frame(x = data[ , xvar],
                  y = y2,
-                 component = "trend",
+                 component = facet.titles[2],
                  stringsAsFactors = FALSE),
       data.frame(x = data[ , xvar],
                  y = y3,
-                 component = "seasonal",
+                 component = facet.titles[3],
                  stringsAsFactors = FALSE),
       data.frame(x = data[ , xvar],
                  y = y4,
-                 component = "irregular",
+                 component = facet.titles[4],
                  stringsAsFactors = FALSE)
    )
    
@@ -111,6 +112,8 @@ ggsdc_helper <- function(data, mapping, method, s.window,
 #' If NULL, no conversion takes place and the data are presented on the original scale.
 #' @param index.basis if index.ref is not NULL, the basis point for converting
 #' to an index, most commonly 100 or 1000.  See examples.
+#' @param facet.titles a vector in the order of \code{observed}, \code{trend}, \code{seasonal} and \code{irregular} 
+#' for the titles of the four facets of the decomposition.  Make sure you get the order right...
 #' @return an object of class ggplot with four facets
 #' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition
@@ -166,7 +169,8 @@ ggsdc_helper <- function(data, mapping, method, s.window,
 ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose", "seas"),
                   start = NULL, s.window, 
                   type = c("additive", "multiplicative"),
-                  index.ref = NULL, index.basis = 100) {
+                  index.ref = NULL, index.basis = 100,
+                  facet.titles = c("observed", "trend", "seasonal", "irregular")) {
 
    method <- match.arg(method)
    
@@ -189,7 +193,8 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
          this_sdc <- ggsdc_helper(data = this_data, mapping = mapping, 
                                   method = method, s.window = s.window, type = type,
                                   index.ref = index.ref, index.basis = index.basis, 
-                                  frequency = frequency, start = start)
+                                  frequency = frequency, start = start,
+                                  facet.titles = facet.titles)
          this_sdc$colour <- this_col
       
          if(exists("sdc")){
@@ -210,7 +215,8 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
       sdc <- ggsdc_helper(data = data, mapping = mapping, 
                           method = method, s.window = s.window, type = type,
                           index.ref = index.ref, index.basis = index.basis, 
-                          frequency = frequency, start = start)
+                          frequency = frequency, start = start,
+                          facet.titles = facet.titles)
       
       p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
          facet_wrap(~component, ncol = 1, scales = "free_y") 

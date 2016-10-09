@@ -34,32 +34,6 @@ into a usual ggplot() command, substituting for where you'd normally have geom_l
 
 ```r
 library(ggseas)
-```
-
-```
-## Loading required package: seasonal
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## Loading required package: zoo
-```
-
-```
-## 
-## Attaching package: 'zoo'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     as.Date, as.Date.numeric
-```
-
-```r
 # make demo data with the convenience "time series to data.frame" function tsdf()
 ap_df <- tsdf(AirPassengers)
 
@@ -249,4 +223,16 @@ ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-4.png)
+
+Coming in 0.5.0 - control facet titles during seasonal decomposition on the fly
+
+
+```r
+   ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+         method = "stl", s.window = 7, frequency = 4,
+         facet.titles = c("The original series", "The underlying trend", "Regular seasonal patterns", "All the randomness left")) +
+      geom_line()
+```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 

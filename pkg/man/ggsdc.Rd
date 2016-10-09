@@ -6,7 +6,8 @@
 \usage{
 ggsdc(data, mapping, frequency = NULL, method = c("stl", "decompose",
   "seas"), start = NULL, s.window, type = c("additive", "multiplicative"),
-  index.ref = NULL, index.basis = 100)
+  index.ref = NULL, index.basis = 100, facet.titles = c("observed",
+  "trend", "seasonal", "irregular"))
 }
 \arguments{
 \item{data}{dataset to use for plot.}
@@ -32,6 +33,9 @@ If NULL, no conversion takes place and the data are presented on the original sc
 
 \item{index.basis}{if index.ref is not NULL, the basis point for converting
 to an index, most commonly 100 or 1000.  See examples.}
+
+\item{facet.titles}{a vector in the order of \code{observed}, \code{trend}, \code{seasonal} and \code{irregular} 
+for the titles of the four facets of the decomposition.  Make sure you get the order right...}
 }
 \value{
 an object of class ggplot with four facets

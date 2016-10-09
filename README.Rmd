@@ -117,3 +117,12 @@ ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
 
 ```
 
+Coming in 0.5.0 - control facet titles during seasonal decomposition on the fly
+
+```{r}
+   ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+         method = "stl", s.window = 7, frequency = 4,
+         facet.titles = c("The original series", "The underlying trend", "Regular seasonal patterns", "All the randomness left")) +
+      geom_line()
+```
+

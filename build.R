@@ -1,9 +1,12 @@
+library(devtools)
 library(knitr)
+
 knit("README.Rmd", "README.md")
 
-library(devtools)
+
 document("pkg")
 test("pkg")
+check("pkg")
 build("pkg")
 source("examples/examples.R")
 

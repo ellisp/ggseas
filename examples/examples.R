@@ -277,8 +277,17 @@ ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
 
 print(
 ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
-      method = "stl", s.window = 7, frequency = 4) +
+      method = "stl", s.window = 7, frequency = 4,
+      facet.titles = c("take take", "t\u016B\u0101papa", "whakamoe tau", "tupurangi")) +
    geom_line()
 )
+
+print(
+   ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
+         method = "stl", s.window = 7, frequency = 4,
+         facet.titles = c("The original series", "The underlying trend", "Regular seasonal patterns", "All the randomness left")) +
+      geom_line()
+)
+
 
 dev.off()
