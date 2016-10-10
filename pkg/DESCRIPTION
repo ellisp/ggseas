@@ -1,6 +1,6 @@
 Package: ggseas
 Title: 'stats' for Seasonal Adjustment on the Fly with 'ggplot2'
-Version: 0.5.0.9000
+Version: 0.5.1
 Authors@R: c(
    person("Peter", "Ellis", , "peter.ellis2013nz@gmail.com", c("aut", "cre")),
    person("Christophe", "Sax", role = "ctb")

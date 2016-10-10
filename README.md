@@ -34,32 +34,6 @@ into a usual ggplot() command, substituting for where you'd normally have geom_l
 
 ```r
 library(ggseas)
-```
-
-```
-## Loading required package: seasonal
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## Loading required package: zoo
-```
-
-```
-## 
-## Attaching package: 'zoo'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     as.Date, as.Date.numeric
-```
-
-```r
 # make demo data with the convenience "time series to data.frame" function tsdf()
 ap_df <- tsdf(AirPassengers)
 

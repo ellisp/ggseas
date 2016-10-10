@@ -7,7 +7,7 @@
 #' \itemize{
 #'     \item{\code{stat_seas()}, \code{stat_stl()} and friends do seasonal adjustment, indexing, rolling averages and by default render a line geom.
 #'     You can consider these as taking the place of \code{geom_line()} in the ggplot2 pipeline}
-#'     \item{\code{ggsdc()} goes where \code{ggplot()} normally does (ie at the beginning of the pipeline) and creates a graphic with four facets for the original data, trend, seasonal and random components}
+#'     \item{\code{ggsdc()} goes where \code{ggplot()} normally does (ie at the beginning of the graphics part of the pipeline) and creates a graphic with four facets for the original data, trend, seasonal and random components}
 #' 
 #' }
 #' 
