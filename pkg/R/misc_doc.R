@@ -17,8 +17,6 @@
 
 
 
-
-
 #' New Zealand Balance of Payments major components 1971Q2 to 2015Q2
 #' 
 #' New Zealand's "BPM6 Quarterly, Balance of payments major components (Qrtly-Mar/Jun/Sep/Dec)".

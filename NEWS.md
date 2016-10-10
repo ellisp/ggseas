@@ -1,5 +1,13 @@
 # NEWS for ggseas
 
+## 0.5.1
+* Minor improvements to documentation eg giving the vignette a title.
+
+## 0.5.0
+* ggsdc gets a facet.titles argument
+* ggsdc will now work with tibbles
+* when a colour is maped to a variable that is a factor, ggsdc will now preserve the ordering of levels in that factor for drawing legends etc
+* added a vignette
 
 ## 0.4.0
 * Seasonal adjustment functions will estimate frequency and (for X13 related purposes) start from the data if possible.  If the x variable is a Date rather than numeric, user still needs to provide start and frequency.
