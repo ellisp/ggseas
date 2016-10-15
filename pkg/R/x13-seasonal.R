@@ -29,7 +29,7 @@ StatSeas <- ggproto("StatSeas", Stat,
                      }
                      
                      
-                     y_ts <- ts(data$y, frequency = frequency, start = start)
+                     y_ts <- stats::ts(data$y, frequency = frequency, start = start)
                      y_sa <- seasonal::final(seasonal::seas(y_ts, list = x13_params))
                      result <- data.frame(x = data$x, y = as.numeric(y_sa))
                      
@@ -51,7 +51,7 @@ StatSeas <- ggproto("StatSeas", Stat,
 #' 
 #' @export
 #' @import ggplot2
-#' @import seasonal
+#' @importFrom seasonal final seas
 #' @param start The starting point for the time series, in a format suitable for \code{ts()}
 #' @param frequency The frequency for the time series
 #' @param x13_params a list of other parameters for \code{seas}
