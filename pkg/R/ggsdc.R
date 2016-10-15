@@ -1,6 +1,6 @@
 
 
-#' @import stats
+#' @importFrom stats ts decompose stl time
 ggsdc_helper <- function(data, mapping, method, s.window, 
                          type = c("additive", "multiplicative"),
                          index.ref, index.basis, start, frequency,

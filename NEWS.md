@@ -1,5 +1,11 @@
 # NEWS for ggseas
 
+## 0.5.3
+* Move stats, zoo and seasonal to imports rather than depends, and import only needed named functions
+
+## 0.5.2
+* Explicitly build vignette
+
 ## 0.5.1
 * Minor improvements to documentation eg giving the vignette a title.
 
