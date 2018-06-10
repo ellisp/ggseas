@@ -91,7 +91,7 @@ StatSeas <- ggproto("StatSeas", Stat,
 #'   
 #' # if the x value is not a decimal eg not created with time(your_ts_object),
 #' # you need to specify start and frequency by hand:
-#' ggplot(filter(nzbop, Account == "Current account"), 
+#' ggplot(subset(nzbop, Account == "Current account"), 
 #'       aes(x = TimePeriod, y = Value)) +
 #'    stat_seas(start = c(1971, 2), frequency = 12) +
 #'    facet_wrap(~Category, scales = "free_y")

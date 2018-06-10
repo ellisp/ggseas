@@ -5,6 +5,7 @@ knit("README.Rmd", "README.md")
 
 
 document("pkg")
+run_examples("pkg")
 test("pkg")
 check("pkg")
 build("pkg")
