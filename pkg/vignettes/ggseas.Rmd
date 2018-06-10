@@ -1,5 +1,5 @@
 ---
-title: "ggsdc - seasonal decomposition on the fly"
+title: "ggseas - seasonal decomposition on the fly"
 author: "Peter Ellis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,7 +19,7 @@ opts_chunk$set(comment=NA, fig.width=7.2)
 ```
 
 
-The `ggsdc` R package aims to help exploratory analysis of time series by making it easy to do seasonal adjustment and decomposition on the fly in the `ggplot2` universe.  It provides two main sets of functionality:
+The `ggseas` R package aims to help exploratory analysis of time series by making it easy to do seasonal adjustment and decomposition on the fly in the `ggplot2` universe.  It provides two main sets of functionality:
 
 * a collection of `ggplot2` `stats` oriented to time-series, allowing indexing, rolling averages and seasonal decomposition to be added as straight-forward statistical transforms with familiar `geoms` like `geom_line` and `geom_point`.
 * the `ggsdc()` function which provides decomposition similar to that from `decompose`, `stl` or the X13-SEATS-ARIMA world via the `seasonal` package, except in `ggplot2` terms so you can use familiar themes, titles, control your `geoms` and `scales`, etc. - and have multiple time series decomposed on a single graphic.
