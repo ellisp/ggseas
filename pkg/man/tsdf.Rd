@@ -28,4 +28,3 @@ head(tsdf(AirPassengers))
 ld <- cbind(fdeaths, mdeaths)
 head(tsdf(ld))
 }
-

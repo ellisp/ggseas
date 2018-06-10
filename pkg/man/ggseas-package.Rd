@@ -18,4 +18,19 @@ Two main sets of functions are provided:
 
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item Report bugs at \url{https://github.com/ellisp/ggseas/issues}
+}
 
+}
+\author{
+\strong{Maintainer}: Peter Ellis \email{peter.ellis2013nz@gmail.com}
+
+Other contributors:
+\itemize{
+  \item Christophe Sax [contributor]
+}
+
+}

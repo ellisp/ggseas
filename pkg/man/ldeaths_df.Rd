@@ -27,4 +27,3 @@ A long form combination of \code{fdeaths} and \code{mdeaths} from the \code{data
 \code{\link{ldeaths}}
 }
 \keyword{datasets}
-

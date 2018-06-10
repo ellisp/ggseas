@@ -98,4 +98,3 @@ ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.w
 \seealso{
 \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
 }
-
