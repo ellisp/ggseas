@@ -1,4 +1,7 @@
 
+#' @importFrom rlang quo_text
+as.character.quosure <- function(x, ...) rlang::quo_text(x)
+
 
 #' @importFrom stats ts decompose stl time
 ggsdc_helper <- function(data, mapping, method, s.window, 
