@@ -26,20 +26,7 @@ StatRollapplyr <- ggproto("StatRollapplyr", Stat,
 #' @export
 #' @import ggplot2
 #' @importFrom zoo rollapplyr
-#' @param data The data to be displayed in this layer. If NULL, this is
-#'   inherited in the call to \code{\link[=ggplot2]{ggplot}}.
-#' @param mapping 	Set of aesthetic mappings created by
-#'   \code{\link[=ggplot2]{aes()}} or \code{\link[=ggplot2]{aes_()}}. If specified
-#'   and \code{inherit.aes = TRUE} (the default), it is combined with the default
-#'   mapping at the top level of the plot. You must supply mapping if there is
-#'   no plot mapping.
-#' @param geom The geometric object to use to display the data for this layer.
-#' @param position A position adjustment to use on the data for this layer.
-#' @param show.legend logical. Should this layer be included in the legends?
-#'   \code{NA}, the default, includes if any aesthetics are mapped. \code{FALSE} never
-#'   includes, and \code{TRUE} always includes. It can also be a named logical vector
-#'   to finely select the aesthetics to display.
-#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather than combining with them.
+#' @inheritParams stat_index
 #' @param width The width to which the rolling version of FUN is applied
 #' @param align specifies whether the transformed series should be left or 
 #' right-aligned or centered compared to the rolling window of observations

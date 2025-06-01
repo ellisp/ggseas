@@ -8,7 +8,7 @@ StatDecomp <- ggproto("StatDecomp", Stat,
                                              index.ref, index.basis, ...) {
                        data <- data[order(data$x), ]
                        
-                       if(class(data$x) == "Date" & (is.null(frequency))){
+                       if("Date" %in% class(data$x) & (is.null(frequency))){
                           stop("When x is of class 'Date' you need to specify frequency explicitly.")
                        }
                        
@@ -52,9 +52,9 @@ StatDecomp <- ggproto("StatDecomp", Stat,
 #' @export
 #' @import ggplot2
 #' @param data The data to be displayed in this layer. If NULL, this is
-#'   inherited in the call to \code{\link[=ggplot2]{ggplot}}.
+#'   inherited in the call to \code{\link[ggplot2]{ggplot}}.
 #' @param mapping 	Set of aesthetic mappings created by
-#'   \code{\link[=ggplot2]{aes()}} or \code{\link[=ggplot2]{aes_()}}. If specified
+#'   \code{\link[ggplot2]{aes()}} or \code{\link[ggplot2]{aes_()}}. If specified
 #'   and \code{inherit.aes = TRUE} (the default), it is combined with the default
 #'   mapping at the top level of the plot. You must supply mapping if there is
 #'   no plot mapping.

@@ -15,14 +15,14 @@ ggsdc_helper <- function(data, mapping, method, s.window,
    data <- data[order(data[ , xvar]), ]
    
    
-   if(class(data[ , xvar]) == "Date" & (is.null(frequency))){
+   if("Date" %in% class(data[ , xvar]) & (is.null(frequency))){
       stop("When x is of class 'Date' you need to specify frequency explicitly.")
    }
    
    if(is.null(start)){
       start <- data[1, xvar]
       if(method == "seas"){
-         if(class(data[ , xvar]) == "Date"){
+         if("Date" %in% class(data[ , xvar])){
             stop("When x is of class 'Date' you need to specify start explicitly if method = 'seas'.")
          }
          message("Calculating starting date of ", start, " from the data.")
@@ -99,6 +99,7 @@ ggsdc_helper <- function(data, mapping, method, s.window,
 #' Creates a four-facet plot of seasonal decomposition showing observed, trend, seasonal and random components
 #' 
 #' @export
+#' @importFrom seasonal seas
 #' @import ggplot2
 #' @param data dataset to use for plot.  
 #' @param mapping List of aesthetic mappings.  Must include x and y, and optionally
@@ -118,7 +119,7 @@ ggsdc_helper <- function(data, mapping, method, s.window,
 #' @param facet.titles a vector in the order of \code{observed}, \code{trend}, \code{seasonal} and \code{irregular} 
 #' for the titles of the four facets of the decomposition.  Make sure you get the order right...
 #' @return an object of class ggplot with four facets
-#' @seealso \code{\link[=stats]{decompose}}, \code{\link[=stats]{stl}}, \code{\link[=seasonal]{seas}}
+#' @seealso \code{\link[stats]{decompose}}, \code{\link[stats]{stl}}, \code{\link[seasonal]{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition
 #' on the variable mapped to the y aesthetic, grouped by the variable (if any)
 #' mapped to the colour or color aesthetic.  This allows the user to perform

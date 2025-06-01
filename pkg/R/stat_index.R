@@ -22,9 +22,9 @@ StatIndex <- ggproto("StatIndex", Stat,
 #' @export
 #' @import ggplot2
 #' @param data The data to be displayed in this layer. If NULL, this is
-#'   inherited in the call to \code{\link[=ggplot2]{ggplot}}.
+#'   inherited in the call to \code{\link[ggplot2]{ggplot}}.
 #' @param mapping 	Set of aesthetic mappings created by
-#'   \code{\link[=ggplot2]{aes()}} or \code{\link[=ggplot2]{aes_()}}. If specified
+#'   \code{\link[ggplot2]{aes}} or \code{\link[ggplot2]{aes_}}. If specified
 #'   and \code{inherit.aes = TRUE} (the default), it is combined with the default
 #'   mapping at the top level of the plot. You must supply mapping if there is
 #'   no plot mapping.
