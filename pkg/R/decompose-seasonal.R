@@ -45,37 +45,52 @@ StatDecomp <- ggproto("StatDecomp", Stat,
 
 
 #' Classical seasonal adjustment Stat
-#' 
-#' Conducts seasonal adjustment on the fly for ggplot2, from classical seasonal decomposition by moving averages
-#' 
+#'
+#' Conducts seasonal adjustment on the fly for ggplot2, from classical seasonal
+#' decomposition by moving averages
+#'
 #' @export
 #' @import ggplot2
+#' @param data The data to be displayed in this layer. If NULL, this is
+#'   inherited in the call to \code{\link[=ggplot2]{ggplot}}.
+#' @param mapping 	Set of aesthetic mappings created by
+#'   \code{\link[=ggplot2]{aes()}} or \code{\link[=ggplot2]{aes_()}}. If specified
+#'   and \code{inherit.aes = TRUE} (the default), it is combined with the default
+#'   mapping at the top level of the plot. You must supply mapping if there is
+#'   no plot mapping.
+#' @param geom The geometric object to use to display the data for this layer.
+#' @param position A position adjustment to use on the data for this layer.
+#' @param show.legend logical. Should this layer be included in the legends?
+#'   \code{NA}, the default, includes if any aesthetics are mapped. \code{FALSE} never
+#'   includes, and \code{TRUE} always includes. It can also be a named logical vector
+#'   to finely select the aesthetics to display.
+#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather than combining with them.
 #' @param frequency The frequency for the time series
 #' @param type The type of seasonal component
-#' @param index.ref if not NULL, a vector of integers indicating which elements of
-#' the beginning of each series to use as a reference point for converting to an index.  
-#' If NULL, no conversion takes place and the data are presented on the original scale.
+#' @param index.ref if not NULL, a vector of integers indicating which elements
+#'   of the beginning of each series to use as a reference point for converting
+#'   to an index. If NULL, no conversion takes place and the data are presented
+#'   on the original scale.
 #' @param index.basis if index.ref is not NULL, the basis point for converting
-#' to an index, most commonly 100 or 1000.  See examples.
+#'   to an index, most commonly 100 or 1000.  See examples.
 #' @param ... other arguments for the geom
-#' @inheritParams ggplot2::stat_identity
 #' @family time series stats for ggplot2
-#' @seealso \code{\link{decompose}}
+#' @seealso \code{\link[=stats]{decompose}}
 #' @details Classical decomposition is a very basic way of performing seasonal
-#' adjustment and is not recommended if you have access to X13-SEATS-ARIMA 
-#' (\code{stat_seas}).  \code{stat_decomp} cannot allow the seasonality to vary
-#' over time, or take outliers into account in calculating seasonality.
+#'   adjustment and is not recommended if you have access to X13-SEATS-ARIMA
+#'   (\code{stat_seas}).  \code{stat_decomp} cannot allow the seasonality to
+#'   vary over time, or take outliers into account in calculating seasonality.
 #' @examples
 #' ap_df <- tsdf(AirPassengers)
-#' 
+#'
 #' # Default additive decomposition (doesn't work well in this case!):
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_decomp()
-#' 
+#'
 #' # Multiplicative decomposition, more appropriate:
 #' ggplot(ap_df, aes(x = x, y = y)) +
 #'    stat_decomp(type = "multiplicative")
-#' 
+#'
 #' # Multiple time series example:
 #' ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 #'   geom_point() +
@@ -88,7 +103,7 @@ StatDecomp <- ggproto("StatDecomp", Stat,
 #'   facet_wrap(~sex) +
 #'   stat_decomp(index.ref = 1:12, index.basis = 1000) +
 #'   ggtitle("Rolling annual median lung deaths, indexed (average month in 1974 = 1000)")
-#'
+#' 
 stat_decomp <- function(mapping = NULL, data = NULL, geom = "line",
                       position = "identity", show.legend = NA, 
                       inherit.aes = TRUE, frequency = NULL, type = c("additive", "multiplicative"), 

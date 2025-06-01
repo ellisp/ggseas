@@ -118,7 +118,7 @@ ggsdc_helper <- function(data, mapping, method, s.window,
 #' @param facet.titles a vector in the order of \code{observed}, \code{trend}, \code{seasonal} and \code{irregular} 
 #' for the titles of the four facets of the decomposition.  Make sure you get the order right...
 #' @return an object of class ggplot with four facets
-#' @seealso \code{\link{decompose}}, \code{\link{stl}}, \code{\link{seas}}
+#' @seealso \code{\link[=stats]{decompose}}, \code{\link[=stats]{stl}}, \code{\link[=seasonal]{seas}}
 #' @details This function takes a data frame and performs seasonal decomposition
 #' on the variable mapped to the y aesthetic, grouped by the variable (if any)
 #' mapped to the colour or color aesthetic.  This allows the user to perform
