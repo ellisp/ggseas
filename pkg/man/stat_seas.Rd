@@ -21,13 +21,13 @@ stat_seas(
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by
-\code{\link[=ggplot2]{aes()}} or \code{\link[=ggplot2]{aes_()}}. If specified
+\code{\link[ggplot2]{aes}} or \code{\link[ggplot2]{aes_}}. If specified
 and \code{inherit.aes = TRUE} (the default), it is combined with the default
 mapping at the top level of the plot. You must supply mapping if there is
 no plot mapping.}
 
 \item{data}{The data to be displayed in this layer. If NULL, this is
-inherited in the call to \code{\link[=ggplot2]{ggplot}}.}
+inherited in the call to \code{\link[ggplot2]{ggplot}}.}
 
 \item{geom}{The geometric object to use to display the data for this layer.}
 
@@ -93,7 +93,7 @@ ggplot(subset(nzbop, Account == "Current account"),
   }
 }
 \seealso{
-\code{\link[=seasonal]s{seas}}
+\code{\link[seasonal]{seas}}
 
 Other time series stats for ggplot2: 
 \code{\link{stat_decomp}()},

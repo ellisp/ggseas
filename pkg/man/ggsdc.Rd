@@ -104,5 +104,5 @@ ggsdc(bop, aes(x = TimePeriod, y = Value, colour = Category), frequency = 4, s.w
       geom_line() 
 }
 \seealso{
-\code{\link[=stats]{decompose}}, \code{\link[=stats]{stl}}, \code{\link[=seasonal]{seas}}
+\code{\link[stats]{decompose}}, \code{\link[stats]{stl}}, \code{\link[seasonal]{seas}}
 }
