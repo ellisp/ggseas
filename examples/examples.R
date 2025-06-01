@@ -255,13 +255,13 @@ ggsdc(subset(nzbop, Account == "Financial account"),
    geom_line()
 )
 
-ca <- subset(nzbop, Account == "Current account" & !Balance)
-
-print(
-   ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category),
-      frequency = 4, method = "seas", start = c(1971, 2)) +
-   geom_line()
-)
+# This example no longer works due to a convergance problem in X13-SEATS-ARIMA
+# with this particular data:
+ca <- subset(nzbop, Account == "Current account" &
+# !Balance)
+#
+# print( ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category), frequency
+# = 4, method = "seas", start = c(1971, 2)) + geom_line() )
 
 serv <- subset(nzbop, Account == "Current account" & 
                   Category %in% c("Services; Exports total", "Services; Imports total"))
