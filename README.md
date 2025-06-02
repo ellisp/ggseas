@@ -14,14 +14,14 @@ Depends on the [`seasonal` package](https://cran.r-project.org/web/packages/seas
 Install the stable version the usual way from CRAN:
 
 
-```r
+``` r
 install.packages("ggseas")
 ```
 
 
 or the latest version (bugs and all) from GitHub:
 
-```r
+``` r
 devtools::install_github("ellisp/ggseas/pkg")
 ```
 
@@ -32,7 +32,7 @@ into a usual ggplot() command, substituting for where you'd normally have geom_l
 
 ### X13-SEATS-ARIMA
 
-```r
+``` r
 library(ggseas)
 # make demo data with the convenience "time series to data.frame" function tsdf()
 ap_df <- tsdf(AirPassengers)
@@ -55,7 +55,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
-```r
+``` r
 # X11 with no outlier treatment
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
@@ -71,7 +71,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-2.png)
 
-```r
+``` r
 ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
    geom_point(colour = "grey50") +
    geom_line(colour = "grey50") +
@@ -100,7 +100,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 
 ### STL (LOESS-based decomposition)
 
-```r
+``` r
 # periodic if fixed seasonality; doesn't work well:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
@@ -113,7 +113,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
-```r
+``` r
 # seasonality varies a bit over time, works better:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
@@ -128,7 +128,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ### Classical decomposition
 
-```r
+``` r
 # default additive decomposition (doesn't work well in this case!):
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
@@ -141,7 +141,7 @@ ggplot(ap_df, aes(x = x, y = y)) +
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
-```r
+``` r
 # multiplicative decomposition, more appropriate:
 ggplot(ap_df, aes(x = x, y = y)) +
    geom_line(colour = "grey80") +
@@ -161,7 +161,7 @@ as allowing ggplot2 look and feel of plots, you can also map a variable to the
 colour (or color) aesthetic, to allow two difference decompositions on the same
 graphic.
 
-```r
+``` r
 ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
    geom_line()
 ```
@@ -171,12 +171,13 @@ ggsdc(ap_df, aes(x = x, y = y), method = "decompose") +
 ```
 
 ```
-## Warning: Removed 6 rows containing missing values (geom_path).
+## Warning: Removed 6 rows containing missing values or values outside the scale range
+## (`geom_line()`).
 ```
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
-```r
+``` r
 ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
    labs(x = "", y = "Air passenger numbers") +
    geom_point()
@@ -188,7 +189,7 @@ ggsdc(ap_df, aes(x = x, y = y), method = "stl", s.window = 7) +
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-2.png)
 
-```r
+``` r
 ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
       geom_line()
 ```
@@ -208,7 +209,7 @@ ggsdc(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex), method = "seas") +
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-3.png)
 
-```r
+``` r
 library(scales) # for label= comma
 serv <- subset(nzbop, Account == "Current account" & 
                   Category %in% c("Services; Exports total", "Services; Imports total"))
@@ -227,7 +228,7 @@ ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
 Coming in 0.5.0 - control facet titles during seasonal decomposition on the fly
 
 
-```r
+``` r
    ggsdc(serv, aes(x = TimePeriod, y = Value, colour = Category),
          method = "stl", s.window = 7, frequency = 4,
          facet.titles = c("The original series", "The underlying trend", "Regular seasonal patterns", "All the randomness left")) +
