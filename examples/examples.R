@@ -1,5 +1,7 @@
 library(Cairo)
 library(dplyr)
+library(ggseas)
+
 CairoPDF("examples/examples.pdf", 11, 8)
 
 ap_df <- tsdf(AirPassengers)
@@ -257,8 +259,8 @@ ggsdc(subset(nzbop, Account == "Financial account"),
 
 # This example no longer works due to a convergance problem in X13-SEATS-ARIMA
 # with this particular data:
-ca <- subset(nzbop, Account == "Current account" &
-# !Balance)
+#
+# ca <- subset(nzbop, Account == "Current account" & # !Balance)
 #
 # print( ggsdc(ca, aes(x = TimePeriod, y = Value, colour = Category), frequency
 # = 4, method = "seas", start = c(1971, 2)) + geom_line() )
