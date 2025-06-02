@@ -34,7 +34,7 @@
 #'   means the fourth, fifth and six months of 1971.
 #' }
 #' 
-#' This dataset was downloaded from \url{http://www.stats.govt.nz/infoshare/} and 
+#' This dataset was downloaded from \url{https://infoshare.stats.govt.nz/} and 
 #' transformed in the following way:
 #' 
 #' \itemize{
@@ -44,6 +44,6 @@
 #'   \item the single variable categorisation was split into two (Account
 #'    and Category) to make it tidier.
 #'   }
-#' @source Statistics New Zealand \url{http://www.stats.govt.nz/browse_for_stats/economic_indicators/balance_of_payments/info-releases.aspx}
+#' @source Statistics New Zealand \url{https://www.stats.govt.nz/topics/balance-of-payments/}
 #' 
 "nzbop"
