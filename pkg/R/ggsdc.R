@@ -213,7 +213,7 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
          sdc[ , colvar] <- factor(sdc[ ,colvar], levels = levels(data[ , colvar]))
       }
 
-      p <- ggplot(sdc, aes_string(x = "x", y = "y", colour = colvar)) +
+      p <- ggplot(sdc, aes(x = .data$x, y = .data$y, colour = .data[[colvar]])) +
          facet_wrap(~component, ncol = 1, scales = "free_y") 
    
    } else {
@@ -224,7 +224,7 @@ ggsdc <- function(data, mapping, frequency = NULL, method = c("stl", "decompose"
                           frequency = frequency, start = start,
                           facet.titles = facet.titles)
       
-      p <- ggplot(sdc, aes_string(x = "x", y = "y")) +
+      p <- ggplot(sdc, aes(x = .data$x, y = .data$y)) +
          facet_wrap(~component, ncol = 1, scales = "free_y") 
       
    }
