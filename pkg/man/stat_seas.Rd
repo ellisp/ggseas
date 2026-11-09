@@ -4,46 +4,80 @@
 \alias{stat_seas}
 \title{X13 seasonal adjustment Stat}
 \usage{
-stat_seas(mapping = NULL, data = NULL, geom = "line",
-  position = "identity", show.legend = NA, inherit.aes = TRUE,
-  x13_params = NULL, index.ref = NULL, index.basis = 100,
-  frequency = NULL, start = NULL, ...)
+stat_seas(
+  mapping = NULL,
+  data = NULL,
+  geom = "line",
+  position = "identity",
+  show.legend = NA,
+  inherit.aes = TRUE,
+  x13_params = NULL,
+  index.ref = NULL,
+  index.basis = 100,
+  frequency = NULL,
+  start = NULL,
+  ...
+)
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or
-\code{\link[=aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
+\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
 
 \item{data}{The data to be displayed in this layer. There are three
 options:
 
 If \code{NULL}, the default, the data is inherited from the plot
-data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
+data as specified in the call to \code{\link[ggplot2:ggplot]{ggplot()}}.
 
 A \code{data.frame}, or other object, will override the plot
 data. All objects will be fortified to produce a data frame. See
-\code{\link[=fortify]{fortify()}} for which variables will be created.
+\code{\link[ggplot2:fortify]{fortify()}} for which variables will be created.
 
 A \code{function} will be called with a single argument,
-the plot data. The return value must be a \code{data.frame.}, and
-will be used as the layer data.}
+the plot data. The return value must be a \code{data.frame}, and
+will be used as the layer data. A \code{function} can be created
+from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
-\item{geom}{The geometric object to use display the data}
+\item{geom}{The geometric object to use to display the data for this layer.
+When using a \verb{stat_*()} function to construct a layer, the \code{geom} argument
+can be used to override the default coupling between stats and geoms. The
+\code{geom} argument accepts the following:
+\itemize{
+\item A \code{Geom} ggproto subclass, for example \code{GeomPoint}.
+\item A string naming the geom. To give the geom as a string, strip the
+function name of the \code{geom_} prefix. For example, to use \code{geom_point()},
+give the geom as \code{"point"}.
+\item For more information and other ways to specify the geom, see the
+\link[ggplot2:layer_geoms]{layer geom} documentation.
+}}
 
-\item{position}{Position adjustment, either as a string, or the result of
-a call to a position adjustment function.}
+\item{position}{A position adjustment to use on the data for this layer. This
+can be used in various ways, including to prevent overplotting and
+improving the display. The \code{position} argument accepts the following:
+\itemize{
+\item The result of calling a position function, such as \code{position_jitter()}.
+This method allows for passing extra arguments to the position.
+\item A string naming the position adjustment. To give the position as a
+string, strip the function name of the \code{position_} prefix. For example,
+to use \code{position_jitter()}, give the position as \code{"jitter"}.
+\item For more information and other ways to specify the position, see the
+\link[ggplot2:layer_positions]{layer position} documentation.
+}}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 It can also be a named logical vector to finely select the aesthetics to
-display.}
+display. To include legend keys for all levels, even
+when no data exists, use \code{TRUE}.  If \code{NA}, all levels are shown in legend,
+but unobserved levels are omitted.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 
 \item{x13_params}{a list of other parameters for \code{seas}}
 
@@ -86,7 +120,7 @@ ggplot(ldeaths_df, aes(x = YearMon, y = deaths, colour = sex)) +
 ggplot(ap_df, aes(x = x, y = y)) +
   stat_seas(x13_params = list(x11 = "", outlier = NULL),
   index.ref = 1, index.basis = 1000) +
-  labs(y = "Seasonally adjusted index\\n(first observation = 1000)")
+  labs(y = "Seasonally adjusted index\n(first observation = 1000)")
   
 # if the x value is not a decimal eg not created with time(your_ts_object),
 # you need to specify start and frequency by hand:
@@ -100,7 +134,10 @@ ggplot(subset(nzbop, Account == "Current account"),
 \seealso{
 \code{\link{seas}}
 
-Other time series stats for ggplot2: \code{\link{stat_decomp}},
-  \code{\link{stat_index}}, \code{\link{stat_rollapplyr}},
-  \code{\link{stat_stl}}
+Other time series stats for ggplot2:
+\code{\link[=stat_decomp]{stat_decomp()}},
+\code{\link[=stat_index]{stat_index()}},
+\code{\link[=stat_rollapplyr]{stat_rollapplyr()}},
+\code{\link[=stat_stl]{stat_stl()}}
 }
+\concept{time series stats for ggplot2}

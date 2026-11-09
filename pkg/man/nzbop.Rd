@@ -4,7 +4,9 @@
 \name{nzbop}
 \alias{nzbop}
 \title{New Zealand Balance of Payments major components 1971Q2 to 2015Q2}
-\format{An object of class \code{data.frame} with 3676 rows and 5 columns.}
+\format{
+An object of class \code{data.frame} with 3676 rows and 5 columns.
+}
 \source{
 Statistics New Zealand \url{http://www.stats.govt.nz/browse_for_stats/economic_indicators/balance_of_payments/info-releases.aspx}
 }
