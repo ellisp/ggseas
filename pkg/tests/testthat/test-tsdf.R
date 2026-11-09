@@ -19,6 +19,6 @@ test_that("ggplot can draw graphic with tsdf output", {
    tmp2 <- ggplot(tmp1, aes(x = x)) +
       geom_line(aes(y = fdeaths)) +
       geom_line(aes(y = mdeaths))
-   expect_equal(class(tmp2), c("gg", "ggplot"))
+   expect_s3_class(tmp2, c("gg", "ggplot"))
    expect_equal(length(tmp2$layers), 2)
 })

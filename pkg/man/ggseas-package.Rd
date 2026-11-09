@@ -28,6 +28,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Peter Ellis \email{peter.ellis2013nz@gmail.com}
 
+Authors:
+\itemize{
+  \item Peter Ellis \email{peter.ellis2013nz@gmail.com}
+}
+
 Other contributors:
 \itemize{
   \item Christophe Sax [contributor]

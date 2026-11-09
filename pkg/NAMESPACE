@@ -9,10 +9,14 @@ export(stat_stl)
 export(tsdf)
 import(ggplot2)
 importFrom(rlang,quo_text)
-importFrom(seasonal,final)
-importFrom(seasonal,seas)
-importFrom(stats,decompose)
-importFrom(stats,stl)
-importFrom(stats,time)
-importFrom(stats,ts)
+importFrom(seasonal,
+  final,
+  seas
+)
+importFrom(stats,
+  decompose,
+  stl,
+  time,
+  ts
+)
 importFrom(zoo,rollapplyr)

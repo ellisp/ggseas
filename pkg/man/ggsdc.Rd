@@ -4,10 +4,18 @@
 \alias{ggsdc}
 \title{Visualise seasonal decomposition}
 \usage{
-ggsdc(data, mapping, frequency = NULL, method = c("stl", "decompose",
-  "seas"), start = NULL, s.window, type = c("additive", "multiplicative"),
-  index.ref = NULL, index.basis = 100, facet.titles = c("observed",
-  "trend", "seasonal", "irregular"))
+ggsdc(
+  data,
+  mapping,
+  frequency = NULL,
+  method = c("stl", "decompose", "seas"),
+  start = NULL,
+  s.window,
+  type = c("additive", "multiplicative"),
+  index.ref = NULL,
+  index.basis = 100,
+  facet.titles = c("observed", "trend", "seasonal", "irregular")
+)
 }
 \arguments{
 \item{data}{dataset to use for plot.}

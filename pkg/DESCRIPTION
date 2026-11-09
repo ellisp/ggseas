@@ -18,9 +18,9 @@ Imports:
     zoo
 License: GPL-3
 LazyData: true
-RoxygenNote: 6.0.1
 BugReports: https://github.com/ellisp/ggseas/issues
 Suggests: testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.1

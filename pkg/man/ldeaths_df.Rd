@@ -4,7 +4,9 @@
 \name{ldeaths_df}
 \alias{ldeaths_df}
 \title{Monthly Deaths from Lung Diseases in the UK}
-\format{A data frame with 141 rows and 3 variables.}
+\format{
+A data frame with 141 rows and 3 variables.
+}
 \source{
 P. J. Diggle (1990) \emph{Time Series: A Biostatistical Introduction}. Oxford, table A.3
 }
